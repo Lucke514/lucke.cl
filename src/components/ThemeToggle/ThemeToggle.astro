@@ -1,0 +1,51 @@
+---
+
+---
+<button
+  id="theme-toggle"
+  class="p-2 text-lg rounded focus:outline-none transition-colors duration-300"
+  aria-label="Cambiar tema"
+  aria-pressed="false"
+  role="switch"
+>
+  <span id="theme-icon">🌙</span>
+</button>
+
+<script>
+  // Función para establecer el tema
+  const setTheme = (theme : 'light' | 'dark') => {
+    const htmlElement = document.documentElement;
+    const icon = document.getElementById('theme-icon') as HTMLSpanElement;
+    const button = document.getElementById('theme-toggle') as HTMLButtonElement;
+
+    if (theme === 'dark') {
+      htmlElement.classList.add('dark');
+      icon.textContent = '☀️'; // Icono de sol
+      button.setAttribute('aria-pressed', 'true');
+    } else {
+      htmlElement.classList.remove('dark');
+      icon.textContent = '🌙'; // Icono de luna
+      button.setAttribute('aria-pressed', 'false');
+    }
+  };
+
+  // Inicializar el tema al cargar la página
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme as 'light' | 'dark');
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    // Añadir el evento de clic al botón
+    const button = document.getElementById('theme-toggle') as HTMLButtonElement;
+    button.addEventListener('click', () => {
+      const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  });
+</script>
