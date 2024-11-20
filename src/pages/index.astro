@@ -1,9 +1,42 @@
 ---
-import Header from '../components/Header/Header.astro';
+import SocialMedia from '../components/SocialMedia/SocialMedia.astro';
+import Certifications from 'src/components/Certifications/Certifications.astro';
+import Technologies from 'src/components/Technologies/Technologies.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Lucas Gonzalez | Desarrollador Web Full Stack +2 años de experiencia.">
-	<Header />
+	<section class="max-w-5xl h-[70vh] flex flex-col justify-center align-center mx-auto dark:text-white font-bold pl-10">
+		<h1 class="text-7xl"><span class="text-red-500">L</span>ucas Gonzalez</h1>
+		<p>Desarrollador Web Full Stack <span class="text-red-400">+2 años</span> de experiencia.</p>
+		<SocialMedia />
+	</section>
+
+	<section class="max-w-5xl mx-auto dark:text-white" id="about-seccion">
+		<h1 class="font-bold text-5xl text-center mb-12">Acerca de mi</h1>
+		<p class="text-left font-semibold text-wrap mb-14 p-10" data-aos="fade-up-left">
+			<span class="text-xl font-bold text-orange-500">Especialista</span> en Tecnología de la Información con certificación en <span class=" font-bold text-red-300 text-xl">Ciberseguridad</span> para sistemas de control industrial.
+			Poseo una sólida experiencia en <span class="text-blue-300 font-bold text-xl">desarrollo de software</span>, complementada con habilidades en gestión de redes y soporte técnico.
+			Destaco por mi enfoque proactivo en la resolución de problemas y mi dedicación a la mejora continua en el ámbito de la ciberseguridad.
+			<br><br>
+			Soy un <span class="font-bold text-xl text-gray-800 dark:text-yellow-200">comunicador eficaz</span>, capaz de colaborar eficientemente en equipos multidisciplinarios. 
+			Mi responsabilidad y compromiso con la calidad se reflejan en cada proyecto que emprendo,
+			siempre con el <span class="font-bold text-xl text-green-400">objetivo</span> de fortalecer la seguridad y eficiencia de los sistemas tecnológicos.	
+		</p>
+	</section>
 	
+	<section class="max-w-5xl mx-auto">
+		<div class="px-10" data-aos="fade-up-left">
+			<h2 class="text-3xl font-bold text-center mb-5">Certificaciones</h2>
+			<Certifications />
+		</div>
+	</section>
+	<section class="max-w-5xl mx-auto">
+		<div class="mt-28" id="technologies-seccion" data-aos="fade-up-right">
+			<h2 class="text-3xl font-bold text-center mb-5">Stack tecnológico</h2>
+			<Technologies />
+		</div>
+	</section>
+	<section class="h-[50vh]">
+	</section>
 </Layout>

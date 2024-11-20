@@ -3,34 +3,94 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle.astro";
 ---
 
 <header class="w-screen py-5">
-    <div class="flex justify-around items-center">
-        <section class="flex justify-start">
-            <a href="/" class="text-2xl font-bold">
-                <img src="/img/Avatar.png" alt="Avatar de Lucke" class="h-16 w-16 rounded-full">
+  <div class="flex justify-around items-center px-4">
+    <!-- Logo -->
+    <a href="/" class="text-2xl font-bold">
+      <img src="/img/Avatar.png" alt="Avatar de Lucke" class="h-16 w-16 rounded-full">
+    </a>
+
+    <!-- Sección derecha (menú y toggle de tema) -->
+    <div class="flex items-center space-x-4">
+      <!-- Menú de navegación en escritorio -->
+      <nav class="hidden md:block">
+        <ul class="flex gap-4">
+          <li class="group relative">
+            <a href="/" class="text-black dark:text-white font-semibold">
+              Inicio
+              <span
+                class="absolute left-0 -bottom-1 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
             </a>
-        </section>
-        <section class="flex items-center">
-            <ul class="flex gap-4">
-                <li class="group relative">
-                    <a href="/" class="text-black dark:text-white font-semibold">
-                      Inicio
-                      <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                  </li>
-                <li class="group relative">
-                    <a href="/sobre-mi" class="text-black dark:text-white font-semibold">
-                    Sobre mí
-                    <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                </li>
-                <li class="group relative">
-                    <a href="/proyectos" class="text-black dark:text-white font-semibold">
-                    Proyectos
-                    <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                </li>
-            </ul>
-            <ThemeToggle />
-        </section>
+          </li>
+          <li class="group relative">
+            <a href="/sobre-mi" class="text-black dark:text-white font-semibold">
+              Sobre mí
+              <span
+                class="absolute left-0 -bottom-1 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          </li>
+          <li class="group relative">
+            <a href="/proyectos" class="text-black dark:text-white font-semibold">
+              Proyectos
+              <span
+                class="absolute left-0 -bottom-1 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botón del menú desplegable en móvil -->
+      <div class="relative md:hidden">
+        <button id="menu-btn" class="text-black dark:text-white focus:outline-none">
+          <!-- Icono del menú hamburguesa -->
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Menú desplegable -->
+        <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+          <ul class="py-1">
+            <li>
+              <a href="/" class="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a href="/sobre-mi" class="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                Sobre mí
+              </a>
+            </li>
+            <li>
+              <a href="/proyectos" class="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                Proyectos
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Toggle de tema -->
+      <ThemeToggle />
     </div>
+  </div>
 </header>
+
+<!-- Script para controlar el menú desplegable -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('menu-btn') as HTMLButtonElement;
+    const dropdownMenu = document.getElementById('dropdown-menu') as HTMLDivElement;
+
+    menuBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Opcional: Cerrar el menú al hacer clic fuera de él
+    document.addEventListener('click', (event : any) => {
+      if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  });
+</script>

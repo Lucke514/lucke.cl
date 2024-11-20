@@ -1,4 +1,6 @@
 ---
+import Header from 'src/components/Header/Header.astro';
+
 interface Props {
 	title: string;
 }
@@ -15,7 +17,8 @@ const { title } = Astro.props;
     <link rel="icon" type="image/png" href="/img/Avatar.png" />
     <link rel="stylesheet" href="/src/styles/globals.css" />
   </head>
-  <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
+  <body class="bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-hidden max-w-screen">
+    <Header />
     <slot />
   </body>
 </html>

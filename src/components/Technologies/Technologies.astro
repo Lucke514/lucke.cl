@@ -1,0 +1,112 @@
+---
+import CssIcon from 'shared/icons/Technologies/CssIcon.astro';
+import HtmlIcon from 'shared/icons/Technologies/HtmlIcon.astro';
+import JavaScriptIcon from 'shared/icons/Technologies/JavaScriptIcon.astro';
+import NodeIcon from 'shared/icons/Technologies/NodeIcon.astro';
+import MysqlIcon from 'shared/icons/Technologies/MysqlIcon.astro';
+import AndroidIcon from 'shared/icons/Technologies/AndroidIcon.astro';
+import GitIcon from 'shared/icons/Technologies/GitIcon.astro';
+import PythonIcon from 'shared/icons/Technologies/PythonIcon.astro';
+import GoIcon from 'shared/icons/Technologies/GoIcon.astro';
+import PhpIcon from 'shared/icons/Technologies/PhpIcon.astro';
+import AstroIcon from 'shared/icons/Technologies/AstroIcon.astro';
+import TailwindIcon from 'shared/icons/Technologies/TailwindIcon.astro';
+import DockerIcon from 'shared/icons/Technologies/DockerIcon.astro';
+import FirebaseIcon from 'shared/icons/Technologies/FirebaseIcon.astro';
+import PostmanIcon from 'shared/icons/Technologies/PostmanIcon.astro';
+import Mongo from 'shared/icons/Technologies/mongo.astro';
+
+const technologies = [
+  { Icon: HtmlIcon, name: 'HTML' },
+  { Icon: CssIcon, name: 'CSS' },
+  { Icon: JavaScriptIcon, name: 'JavaScript' },
+  { Icon: PhpIcon, name: 'PHP' },
+  { Icon: AstroIcon, name: 'Astro' },
+  { Icon: NodeIcon, name: 'Node.js' },
+  { Icon: TailwindIcon, name: 'Tailwind' },
+  { Icon: AndroidIcon, name: 'Android' },
+  { Icon: PythonIcon, name: 'Python' },
+  { Icon: GoIcon, name: 'Go' },
+  { Icon: MysqlIcon, name: 'MySQL' },
+  { Icon: GitIcon, name: 'Git' },
+  { Icon: DockerIcon, name: 'Docker' },
+  { Icon: FirebaseIcon, name: 'Firebase' },
+  { Icon: PostmanIcon, name: 'Postman' },
+  { Icon: Mongo, name: 'MongoDB' }
+];
+---
+
+<div class="tech-slider-wrapper relative">
+  <div class="tech-slider-container overflow-hidden">
+    <div class="slider-track flex">
+      {technologies.map(({ Icon, name }) => (
+        <div class="tech-item flex flex-col items-center justify-center mx-6">
+          <Icon class="h-20 hover:animate-pulse transition-transform hover:scale-105" />
+          <p class="mt-2 text-sm font-medium">{name}</p>
+        </div>
+      ))}
+      {technologies.map(({ Icon, name }) => (
+        <div class="tech-item flex flex-col items-center justify-center mx-6">
+          <Icon class="h-20 hover:animate-pulse transition-transform hover:scale-105" />
+          <p class="mt-2 text-sm font-medium">{name}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="fade-left absolute left-0 top-0 h-full bg-gradient-to-r from-white dark:from-transparent to-transparent"></div>
+  <div class="fade-right absolute right-0 top-0 h-full bg-gradient-to-l from-white dark:from-transparent to-transparent"></div>
+</div>
+
+<style>
+  .tech-slider-wrapper {
+    position: relative;
+    width: 100%;
+    background: transparent;
+  }
+
+  .tech-slider-container {
+    position: relative;
+    width: 100%;
+    background: transparent;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+  }
+
+  .slider-track {
+    animation: slide 40s linear infinite;
+    width: fit-content;
+  }
+
+  .tech-item {
+    flex: 0 0 auto;
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider-track {
+      animation: none;
+    }
+  }
+</style>
