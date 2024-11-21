@@ -41,13 +41,28 @@ const technologies = [
     <div class="slider-track flex">
       {technologies.map(({ Icon, name }) => (
         <div class="tech-item flex flex-col items-center justify-center mx-6">
-          <Icon class="h-20 hover:animate-pulse transition-transform hover:scale-105" />
+          <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
           <p class="mt-2 text-sm font-medium">{name}</p>
         </div>
       ))}
       {technologies.map(({ Icon, name }) => (
         <div class="tech-item flex flex-col items-center justify-center mx-6">
-          <Icon class="h-20 hover:animate-pulse transition-transform hover:scale-105" />
+          <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
+          <p class="mt-2 text-sm font-medium">{name}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="slider-track-reverse flex mt-6">
+      {technologies.map(({ Icon, name }) => (
+        <div class="tech-item flex flex-col items-center justify-center mx-6">
+          <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
+          <p class="mt-2 text-sm font-medium">{name}</p>
+        </div>
+      ))}
+      {technologies.map(({ Icon, name }) => (
+        <div class="tech-item flex flex-col items-center justify-center mx-6">
+          <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
           <p class="mt-2 text-sm font-medium">{name}</p>
         </div>
       ))}
@@ -85,7 +100,11 @@ const technologies = [
   }
 
   .slider-track {
-    animation: slide 40s linear infinite;
+    animation: slide 60s linear infinite;
+    width: fit-content;
+  }
+  .slider-track-reverse {
+    animation: slide 60s linear reverse infinite;
     width: fit-content;
   }
 
