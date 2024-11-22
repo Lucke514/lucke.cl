@@ -3,6 +3,7 @@ import Certifications from 'src/components/Certifications/Certifications.astro';
 import Technologies from 'src/components/Technologies/Technologies.astro';
 import Layout from '../layouts/Layout.astro';
 import WorkExperience from 'src/components/WorkExperience/WorkExperience.astro';
+import SocialMedia from 'src/components/SocialMedia/SocialMedia.astro';
 ---
 
 <Layout title="Lucas Gonzalez | Desarrollador Web Full Stack +2 años de experiencia.">
@@ -31,13 +32,21 @@ import WorkExperience from 'src/components/WorkExperience/WorkExperience.astro';
             </li>
           </ul>
 
-          <div class="flex gap-4 justify-center lg:justify-start">
-            <a href="#about-seccion" class="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
-              Conoce más
-            </a>
-            <a href="mailto:lucas@lucke.c" class="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
-              Contactar
-            </a>
+          <div class="space-y-4">
+            <!-- Social Media Integration -->
+            <div class="flex justify-center lg:justify-start">
+              <SocialMedia />
+            </div>
+            
+            <div class="flex gap-4 justify-center lg:justify-start">
+              <a href="#about-seccion" class="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                Conoce más
+              </a>
+              <a href="mailto:lucas@lucke.c" class="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+                Contactar
+              </a>
+            </div>
+            
           </div>
         </div>
 
