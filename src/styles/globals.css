@@ -6,5 +6,6 @@
 
 /* Opcional: Añadir transiciones suaves para el cambio de tema */
 html {
-  transition: background-color 0.3s, color 0.7s;
+  transition: background-color 0.3s color 0.7s;
 }
+

@@ -53,19 +53,33 @@ const certificaciones = [
     url: "https://www.credly.com/badges/0e7da853-17be-4393-9f8c-b49949ce67ff/public_url",
     importante: false,
   },
+  {
+    nombre: "Cibersecutity Awareness",
+    img: "/img/certifications/cibersecurity-awareness.png",
+    alt: "Cibersecutity Awareness",
+    url: "https://www.credly.com/badges/f311c886-f38a-4b7c-8745-5027de3b335b/linked_in_profile",
+    importante: false,
+  },
+  {
+    nombre: "CCNA: Introduction to Networks",
+    img: "/img/certifications/ccna-introduction-to-networks.png",
+    alt: "CCNA: Introduction to Networks",
+    url: "https://www.credly.com/badges/13bea9eb-d2ac-469d-b491-71aa63547348",
+    importante: false,
+  }
 ];
 
 /* Ordenar certificaciones colocando las importantes al inicio */
 certificaciones.sort((a: Certificacion, b: Certificacion) => Number(b.importante) - Number(a.importante));
 ---
-<div class="contenedor-certificaciones grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6 mx-auto">
+<div class="flex flex-wrap mx-auto">
   {certificaciones.map((certificacion: Certificacion) => (
-    <div class="flex flex-col justify-center items-center gap-2 w-28 hover:opacity-80 mx-auto">
+    <div class="flex flex-col justify-center items-center gap-4 w-28 hover:opacity-80 mx-auto">
       <a href={certificacion.url} target="_blank" rel="noopener noreferrer">
         <Image 
           src={certificacion.img} 
           alt={certificacion.alt} 
-          class="w-28 h-28 object-cover" 
+          class="w-28 h-28 object-cover m-2" 
           width={112} 
           height={112} 
           loading="lazy"

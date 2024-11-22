@@ -38,33 +38,35 @@ const technologies = [
   { Icon: TypeScript, name: 'TypeScript' },
   { Icon: React, name: 'React' },
 ];
+
+const firstHalf = technologies.slice(0, technologies.length / 2);
+const secondHalf = technologies.slice(technologies.length / 2);
 ---
 
 <div class="tech-slider-wrapper relative">
   <div class="tech-slider-container overflow-hidden">
     <div class="slider-track flex">
-      {technologies.map(({ Icon, name }) => (
+      {firstHalf.map(({ Icon, name }) => (
         <div class="tech-item flex flex-col items-center justify-center mx-6">
           <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
           <p class="mt-2 text-sm font-medium">{name}</p>
         </div>
       ))}
-      {technologies.map(({ Icon, name }) => (
+      {firstHalf.map(({ Icon, name }) => (
         <div class="tech-item flex flex-col items-center justify-center mx-6">
           <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
           <p class="mt-2 text-sm font-medium">{name}</p>
         </div>
       ))}
     </div>
-
     <div class="slider-track-reverse flex mt-6">
-      {technologies.map(({ Icon, name }) => (
+      {secondHalf.map(({ Icon, name }) => (
         <div class="tech-item flex flex-col items-center justify-center mx-6">
           <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
           <p class="mt-2 text-sm font-medium">{name}</p>
         </div>
       ))}
-      {technologies.map(({ Icon, name }) => (
+      {secondHalf.map(({ Icon, name }) => (
         <div class="tech-item flex flex-col items-center justify-center mx-6">
           <Icon class="h-16 hover:animate-pulse transition-transform hover:scale-105" />
           <p class="mt-2 text-sm font-medium">{name}</p>
