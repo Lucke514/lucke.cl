@@ -9,27 +9,90 @@ const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lucas Gonzalez - Desarrollador Web Full Stack con más de 2 años de experiencia" />
     <title>{title}</title>
     <link rel="icon" type="image/png" href="/img/Avatar.png" />
     <link rel="stylesheet" href="/styles/globals.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-white text-black dark:bg-black/90 dark:text-white overflow-x-hidden max-w-screen w-screen transition-all duration-500 h-screen">
+  <body class="bg-gradient-to-b from-red-500/10 to-transparent dark:from-red-500/5 dark:text-white overflow-x-hidden max-w-screen w-screen transition-colors duration-500 min-h-screen]">
     <Header />
-    <main class="w-screen max-w-5xl mx-auto px-10 md:px-0">
+    <main class="w-screen max-w-5xl mx-auto">
       <slot />
     </main>
     <Footer />
   </body>
 </html>
 
+<style is:global>
+  :root {
+    --accent: 239, 68, 68; /* red-500 */
+    --accent-light: 252, 165, 165; /* red-300 */
+    --accent-dark: 153, 27, 27; /* red-800 */
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      rgba(var(--accent-dark), 0.1) 60%
+    );
+  }
 
-<style>
+  ::selection {
+    background-color: rgb(var(--accent));
+    color: white;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-size: 224px;
+    scroll-behavior: smooth;
+  }
+
   body {
     display: grid;
     grid-template-rows: auto 1fr auto;
+    background-attachment: fixed;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--accent-dark), 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--accent));
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--accent-dark));
+  }
+
+  /* Smooth transitions for dark mode */
+  .dark {
+    color-scheme: dark;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>
