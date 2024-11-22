@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
 
+// https://astro.build/config
 export default defineConfig({
-  // Si usas un adaptador, por ejemplo para despliegues en vercel:
-  adapter: undefined, // o reemplázalo por el adaptador que uses
+  integrations: [tailwind()],
 });
