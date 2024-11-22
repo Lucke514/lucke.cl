@@ -1,26 +1,13 @@
 ---
 import ThemeToggle from "components/ThemeToggle/ThemeToggle.astro";
-import { Image } from "astro:assets";
 ---
-
 <header class="w-screen bg-transparent py-5 px-10">
   <div class="flex justify-between items-center max-w-5xl mx-auto">
     <!-- Logo -->
     <a href="/" class="text-2xl font-bold">
-      <Image 
-        src="/img/Avatar.png" 
-        alt="Lucas Gonzalez" 
-        class="w-16 h-16 rounded-full" 
-        inferSize = {true}
-        title="Avatar"
-        id="avatar-image"
-        width={48}      
-        height={48}     
-        loading="eager"  
-      />
+        <img srcset="/img/Avatar.webp" alt="Avatar" class="w-16 h-16 rounded-full" loading="lazy" />
     </a>
     
-
     <!-- Sección derecha (menú y toggle de tema) -->
     <div class="flex flex-row-reverse items-center md:flex-row space-x-4">
       <!-- Menú de navegación en escritorio -->
@@ -99,7 +86,7 @@ import { Image } from "astro:assets";
     });
 
     // Opcional: Cerrar el menú al hacer clic fuera de él
-    document.addEventListener('click', (event : any) => {
+    document.addEventListener('click', (event: any) => {
       if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
         dropdownMenu.classList.add('hidden');
       }

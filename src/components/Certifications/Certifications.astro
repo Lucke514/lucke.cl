@@ -72,19 +72,19 @@ const certificaciones = [
 /* Ordenar certificaciones colocando las importantes al inicio */
 certificaciones.sort((a: Certificacion, b: Certificacion) => Number(b.importante) - Number(a.importante));
 ---
+
 <div class="flex flex-wrap mx-auto">
-  {certificaciones.map((certificacion: Certificacion) => (
-    <div class="flex flex-col justify-center items-center gap-4 w-28 hover:opacity-80 mx-auto">
-      <a href={certificacion.url} target="_blank" rel="noopener noreferrer">
-        <Image 
-          src={certificacion.img} 
-          alt={certificacion.alt} 
-          class="w-28 h-28 object-cover m-2" 
-          width={112} 
-          height={112} 
-          loading="lazy"
-        />
-      </a>
-    </div>
-  ))}
+  {certificaciones.map((certificacion: Certificacion) => {
+    // Generar rutas para PNG y WebP
+    const imgPng = certificacion.img;
+    const imgWebp = certificacion.img.replace('.png', '.webp');
+
+    return (
+      <div class="flex flex-col justify-center items-center gap-4 w-28 hover:opacity-80 mx-auto">
+        <a href={certificacion.url} target="_blank" rel="noopener noreferrer">
+          <img src={imgWebp} alt="{certificacion.alt}" class="w-28 h-28" loading="lazy" />
+        </a>
+      </div>
+    );
+  })}
 </div>
