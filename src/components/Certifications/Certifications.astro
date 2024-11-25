@@ -66,23 +66,41 @@ const certificaciones = [
     alt: "CCNA: Introduction to Networks",
     url: "https://www.credly.com/badges/13bea9eb-d2ac-469d-b491-71aa63547348",
     importante: false,
-  }
+  },
 ];
 
 /* Ordenar certificaciones colocando las importantes al inicio */
 certificaciones.sort((a: Certificacion, b: Certificacion) => Number(b.importante) - Number(a.importante));
 ---
-
 <div class="flex flex-wrap mx-auto">
   {certificaciones.map((certificacion: Certificacion) => {
-    // Generar rutas para PNG y WebP
-    const imgPng = certificacion.img;
-    const imgWebp = certificacion.img.replace('.png', '.webp');
+    // Generar rutas para diferentes resoluciones
+    const imgPath = certificacion.img;
+    const imgWebpPath = certificacion.img.replace('.png', '.webp');
 
     return (
       <div class="flex flex-col justify-center items-center gap-4 w-28 hover:opacity-80 mx-auto">
         <a href={certificacion.url} target="_blank" rel="noopener noreferrer">
-          <img src={imgWebp} alt="{certificacion.alt}" class="w-28 h-28" loading="lazy" />
+          <picture>
+            <source
+              srcset={`${imgWebpPath}?w=112 112w, ${imgWebpPath}?w=224 224w, ${imgWebpPath}?w=448 448w`}
+              sizes="(max-width: 640px) 112px, (max-width: 1024px) 224px, 448px"
+              type="image/webp"
+            />
+            <source
+              srcset={`${imgPath}?w=112 112w, ${imgPath}?w=224 224w, ${imgPath}?w=448 448w`}
+              sizes="(max-width: 640px) 112px, (max-width: 1024px) 224px, 448px"
+              type="image/png"
+            />
+            <img
+              src={`${imgPath}?w=224`}
+              alt={certificacion.alt}
+              class="w-28 h-28"
+              width="112"
+              height="112"
+              loading="lazy"
+            />
+          </picture>
         </a>
       </div>
     );
