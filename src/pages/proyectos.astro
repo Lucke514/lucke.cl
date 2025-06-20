@@ -21,6 +21,25 @@ interface Project {
 // Array de proyectos
 const projects: Project[] = [
     {
+        title: "Organizer",
+        description: "Sistema de gestión empresarial multimódulo desarrollado como proyecto freelance. Incluye módulo de Inventario finalizado que permite registrar ingresos/salidas de artículos, realizar traspasos entre almacenes y visualizar movimientos segmentados. El sistema muestra alertas de stock bajo en el dashboard principal para mejorar la toma de decisiones.",
+        technologies: ["Next.js", "Prisma", "MySQL", "TailwindCSS"],
+        images: [
+            {
+                src: "/img/projects/organizer-1.webp",
+                alt: "Dashboard principal de Organizer"
+            },
+            {
+                src: "/img/projects/organizer-2.webp",
+                alt: "Módulo de inventario"
+            }
+        ],
+        links: {
+            // Sin links públicos disponibles actualmente
+        },
+        featured: true
+    },
+    {
         title: "Itury",
         description: "Una aplicación web desarrollada en el Hospital Provincial de Ovalle, cuyo objetivo es mejorar la gestión y entrega de medicamentos a los usuarios mediante un sistema de llamadas. Se integran APIs del mismo centro de salud, utilizando tecnologías como Node.js, EJS, Bootstrap y AJAX.",
         technologies: ["EJS", "Node.js", "MySQL", "BoostrapCSS", "JavaScript"],
