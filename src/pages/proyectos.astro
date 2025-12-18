@@ -21,9 +21,9 @@ interface Project {
 // Array de proyectos
 const projects: Project[] = [
     {
-        title: "Organizer",
-        description: "Sistema de gestión empresarial multimódulo desarrollado como proyecto freelance. Incluye módulo de Inventario finalizado que permite registrar ingresos/salidas de artículos, realizar traspasos entre almacenes y visualizar movimientos segmentados. El sistema muestra alertas de stock bajo en el dashboard principal para mejorar la toma de decisiones.",
-        technologies: ["Next.js", "Prisma", "MySQL", "TailwindCSS"],
+        title: "Organizer.cl",
+        description: "Aplicación SaaS para gestión de inventarios, clientes y proveedores. Backend implementado con NestJS + Prisma + MySQL, documentado en Swagger/OpenAPI. Desplegado en AWS (EC2, S3, SES) con CI/CD (Coolify + GitHub Actions). Incluye funcionalidades de códigos de barras, reportes avanzados, alertas automáticas y ventas con pasarelas de pago seguras.",
+        technologies: ["NestJS", "Prisma", "MySQL", "AWS", "Swagger", "Next.js"],
         images: [
             {
                 src: "/img/projects/organizer-1.webp",
@@ -205,6 +205,11 @@ const allBackendProjects = [...backendProjects, ...projects.filter(project => pr
                 Aquí encontrarás una selección de mis proyectos más destacados, 
                 que demuestran mis habilidades en desarrollo web full stack.
             </p>
+            <div class="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-500 rounded-r-lg max-w-3xl mx-auto">
+                <p class="text-sm text-yellow-800 dark:text-yellow-200">
+                    <span class="font-semibold">Nota:</span> Por contratos de confidencialidad, la mayoría de los proyectos más destacados en los que he trabajado no pueden ser mostrados públicamente.
+                </p>
+            </div>
         </header>
 
         <!-- Proyectos Frontend -->
