@@ -1,0 +1,68 @@
+---
+interface Props {
+  targetNumber: number;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+  className?: string;
+}
+
+const { targetNumber, duration = 2, prefix = "", suffix = "", className = "" } = Astro.props;
+---
+
+<span 
+  class={`counter ${className}`}
+  data-target={targetNumber}
+  data-duration={duration}
+  data-prefix={prefix}
+  data-suffix={suffix}
+>
+  0
+</span>
+
+<script>
+  import { CountUp } from 'countup.js';
+
+  function initCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target as HTMLElement;
+          const target = parseInt(counter.dataset.target || '0');
+          const duration = parseFloat(counter.dataset.duration || '2');
+          const prefix = counter.dataset.prefix || '';
+          const suffix = counter.dataset.suffix || '';
+
+          const countUp = new CountUp(counter, target, {
+            duration: duration,
+            prefix: prefix,
+            suffix: suffix,
+            useEasing: true,
+            useGrouping: true,
+          });
+
+          if (!countUp.error) {
+            countUp.start();
+          }
+          
+          observer.unobserve(counter);
+        }
+      });
+    }, observerOptions);
+
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCounters);
+  } else {
+    initCounters();
+  }
+</script>

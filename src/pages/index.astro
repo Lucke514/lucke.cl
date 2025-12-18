@@ -4,91 +4,247 @@ import Technologies from 'src/components/Technologies/Technologies.astro';
 import Layout from '../layouts/Layout.astro';
 import WorkExperience from 'src/components/WorkExperience/WorkExperience.astro';
 import SocialMedia from 'src/components/SocialMedia/SocialMedia.astro';
+import ParticlesBackground from 'src/components/ParticlesBackground.astro';
+import AnimatedCounter from 'src/components/AnimatedCounter.astro';
+import TypedText from 'src/components/TypedText.astro';
 ---
 
 <Layout title="Lucas Gonzalez | Software Engineer +3 años de experiencia.">
-  <section class="min-h-[90vh] flex flex-col justify-center items-center mx-auto dark:text-white relative overflow-hidden px-10">
-    <div class="container mx-auto px-4 z-10">
-      <div class="grid lg:grid-cols-2 gap-8 items-center">
-        <!-- Left Column - Text Content -->
-        <div class="space-y-6 text-center lg:text-left">
-          <div class="space-y-2">
-            <h2 class="text-red-500 font-semibold tracking-wide">SOFTWARE ENGINEER</h2>
-            <h1 class="text-5xl sm:text-7xl font-bold"><span class="text-red-500">L</span>ucas Gonzalez</h1>
-            <p class="text-xl text-gray-600 dark:text-gray-300">
-              Software Engineer <span class="text-red-400 font-semibold">+3 años</span> de experiencia.
+  <!-- Particles Background -->
+  <ParticlesBackground />
+
+  <!-- Hero Section Rediseñado -->
+  <section class="relative min-h-screen flex flex-col justify-center items-center mx-auto px-10 overflow-hidden">
+    <div class="container mx-auto px-4 z-10 relative">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left Column - Main Content -->
+        <div class="space-y-8 text-center lg:text-left">
+          <!-- Animated Title -->
+          <div class="space-y-4">
+            <div class="inline-block">
+              <span class="text-red-500 font-mono text-sm tracking-wider uppercase bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
+                &lt;/&gt; Software Engineering
+              </span>
+            </div>
+            
+            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-bold leading-tight dark:text-white text-gray-900">
+              <span class="text-red-500">L</span>ucas <span class="text-red-500">G</span>onzalez
+            </h1>
+            
+            <div class="text-2xl sm:text-3xl font-semibold text-gray-700 dark:text-gray-300 h-20">
+              <TypedText 
+                strings={[
+                  "Software Engineer",
+                  "Backend Architect",
+                  "Full Stack Developer",
+                  "Cloud Solutions Expert",
+                  "Microservices Specialist"
+                ]}
+                className="text-red-500"
+              />
+            </div>
+
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl">
+              Construyendo soluciones escalables con <span class="font-bold text-red-500">Node.js</span>, 
+              <span class="font-bold text-blue-500">React</span>, y arquitecturas en la <span class="font-bold text-green-500">nube</span>
             </p>
           </div>
 
-          <ul class="flex flex-wrap gap-4 justify-center lg:justify-start">
-            <li class="px-4 py-2 bg-red-500/10 dark:bg-red-500/20 rounded-full text-red-600 dark:text-red-400">
-              Frontend Development
-            </li>
-            <li class="px-4 py-2 bg-blue-500/10 dark:bg-blue-500/20 rounded-full text-blue-600 dark:text-blue-400">
-              Backend Development
-            </li>
-            <li class="px-4 py-2 bg-green-500/10 dark:bg-green-500/20 rounded-full text-green-600 dark:text-green-400">
-              Clean Code
-            </li>
-          </ul>
+          <!-- Tech Stack Pills -->
+          <div class="flex flex-wrap gap-3 justify-center lg:justify-start">
+            <span class="px-4 py-2 bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-lg text-red-600 dark:text-red-400 font-medium border border-red-500/30 hover:border-red-500 transition-all duration-300 hover:scale-105 cursor-default">
+              NestJS
+            </span>
+            <span class="px-4 py-2 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-lg text-blue-600 dark:text-blue-400 font-medium border border-blue-500/30 hover:border-blue-500 transition-all duration-300 hover:scale-105 cursor-default">
+              React
+            </span>
+            <span class="px-4 py-2 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-lg text-green-600 dark:text-green-400 font-medium border border-green-500/30 hover:border-green-500 transition-all duration-300 hover:scale-105 cursor-default">
+              AWS
+            </span>
+            <span class="px-4 py-2 bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-lg text-purple-600 dark:text-purple-400 font-medium border border-purple-500/30 hover:border-purple-500 transition-all duration-300 hover:scale-105 cursor-default">
+              Azure
+            </span>
+            <span class="px-4 py-2 bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 rounded-lg text-yellow-600 dark:text-yellow-400 font-medium border border-yellow-500/30 hover:border-yellow-500 transition-all duration-300 hover:scale-105 cursor-default">
+              Docker
+            </span>
+          </div>
 
-          <div class="space-y-4">
-            <!-- Social Media Integration -->
-            <div class="flex justify-center lg:justify-start">
-              <SocialMedia />
-            </div>
-            
-            <div class="flex gap-4 justify-center lg:justify-start">
-              <a href="#about-seccion" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 transition-colors">
-                Conoce más
-              </a>
+          <!-- CTA Buttons -->
+          <div class="flex gap-4 justify-center lg:justify-start flex-wrap">
+            <a 
+              href="#experience-seccion" 
+              class="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/50 hover:-translate-y-1"
+            >
+              <span class="relative z-10">Ver Experiencia</span>
+              <div class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
 
-              <a href="mailto:lucas@lucke.cl" class="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
-                Contactar
-              </a>
-            </div>
-            
+            <a 
+              href="mailto:lucas.gonzalez.espinosa@outlook.com" 
+              class="group px-8 py-4 border-2 border-red-500 text-red-500 dark:text-red-400 rounded-lg font-semibold hover:bg-red-500 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
+              Contactar
+            </a>
+          </div>
+
+          <!-- Social Media -->
+          <div class="flex justify-center lg:justify-start">
+            <SocialMedia />
           </div>
         </div>
 
-        <!-- Right Column - Stats Cards -->
-        <div class="hidden lg:grid grid-cols-2 gap-4">
-          <dl class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform">
-            <dt class="text-red-700 dark:text-red-400 text-4xl font-bold mb-2">3+</dt>
-            <dd class="text-gray-800 dark:text-gray-100">Años de experiencia</dd>
-          </dl>
-          <dl class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform mt-8">
-            <dt class="text-blue-700 dark:text-blue-300 text-4xl font-bold mb-2">30+</dt>
-            <dd class="text-gray-800 dark:text-gray-100">Proyectos completados</dd>
-          </dl>
-          <dl class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform">
-            <dt class="text-green-700 dark:text-green-300 text-4xl font-bold mb-2">20+</dt>
-            <dd class="text-gray-800 dark:text-gray-100">Tecnologías dominadas</dd>
-          </dl>          
-          <dl class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform mt-8">
-            <dt class="text-purple-700 dark:text-purple-300 text-4xl font-bold mb-2">5+</dt>
-            <dd class="text-gray-800 dark:text-gray-100">Certificaciones</dd>
-          </dl>
-        </div>
+        <!-- Right Column - Animated Stats -->
+        <div class="hidden lg:grid grid-cols-2 gap-6">
+          <div class="group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 dark:border-gray-700">
+            <div class="text-red-600 dark:text-red-400 text-6xl font-bold mb-3 flex items-baseline">
+              <AnimatedCounter targetNumber={3} suffix="+" />
+            </div>
+            <div class="text-gray-700 dark:text-gray-300 font-medium">Años de Experiencia</div>
+            <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">En desarrollo profesional</div>
+          </div>
 
+          <div class="group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 mt-8 border border-gray-200 dark:border-gray-700">
+            <div class="text-blue-600 dark:text-blue-400 text-6xl font-bold mb-3 flex items-baseline">
+              <AnimatedCounter targetNumber={30} suffix="+" />
+            </div>
+            <div class="text-gray-700 dark:text-gray-300 font-medium">Proyectos Entregados</div>
+            <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">Soluciones implementadas</div>
+          </div>
+
+          <div class="group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 dark:border-gray-700">
+            <div class="text-green-600 dark:text-green-400 text-6xl font-bold mb-3 flex items-baseline">
+              <AnimatedCounter targetNumber={20} suffix="+" />
+            </div>
+            <div class="text-gray-700 dark:text-gray-300 font-medium">Tecnologías</div>
+            <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">Stack tecnológico dominado</div>
+          </div>
+
+          <div class="group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 mt-8 border border-gray-200 dark:border-gray-700">
+            <div class="text-purple-600 dark:text-purple-400 text-6xl font-bold mb-3 flex items-baseline">
+              <AnimatedCounter targetNumber={5} suffix="+" />
+            </div>
+            <div class="text-gray-700 dark:text-gray-300 font-medium">Certificaciones</div>
+            <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">Formación profesional</div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+      <a href="#about-seccion" class="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors">
+        <span class="text-sm font-medium">Scroll</span>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </a>
     </div>
   </section>
 
-  <section class="max-w-5xl mx-auto dark:text-white px-10" id="about-seccion">
-    <h2 class="font-bold text-3xl mb-6 text-center">Acerca de mi</h2>
-    <p class="text-left font-semibold text-wrap mb-14" data-aos="fade-up-left">
-      Desarrollador <span class="font-bold text-xl text-red-500">Full Stack JavaScript</span> con experiencia en Node.js (<span class="dark:text-blue-300 text-blue-500 font-bold">NestJS, Express, Fastify</span>) para backend y en 
-      frameworks modernos de frontend como <span class="dark:text-cyan-300 text-cyan-600 font-bold">React, Angular, Astro</span>, especializado en el diseño de <span class="font-bold text-xl dark:text-purple-300 text-purple-600">microservicios 
-      escalables</span>, APIs RESTful/GraphQL y documentación con Swagger/OpenAPI. Dominio de Prisma y TypeORM para entornos SQL y NoSQL.
-      <br><br>
-      Experiencia en <span class="font-bold text-xl dark:text-orange-300 text-orange-500">AWS, Azure y GCP</span>, CI/CD con Docker y GitHub Actions, y en la automatización de pruebas de extremo a extremo 
-      con <span class="dark:text-green-400 text-green-600 font-bold">Playwright y Puppeteer</span>. Enfocado en el <span class="font-bold text-xl dark:text-yellow-200 text-yellow-900">rendimiento de las aplicaciones</span>, la automatización de procesos y la reducción 
-      de los tiempos de despliegue.
-      <br><br>
-      Poseo experiencia adicional en <span class="dark:text-indigo-300 text-indigo-600 font-bold">.NET y Spring Boot</span>. Reconocido por generar mejoras operativas medibles mediante 
-      soluciones <span class="font-bold dark:text-red-300 text-red-500">robustas y seguras</span> en la nube.
-    </p>
+  <!-- About Section Rediseñado -->
+  <section class="relative max-w-6xl mx-auto px-10 py-24" id="about-seccion">
+    <div class="relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="text-red-500 font-mono text-sm tracking-wider uppercase">¿Quién soy?</span>
+        <h2 class="text-5xl font-bold mt-4 mb-6 dark:text-white">
+          Ingeniero de <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-700">Software</span>
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto rounded-full"></div>
+      </div>
+
+      <!-- Content Grid -->
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left - Description -->
+        <div class="space-y-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+          <p class="relative pl-6 border-l-4 border-red-500">
+            Desarrollador <span class="font-bold text-red-500">Full Stack JavaScript</span> con experiencia en Node.js (<span class="font-semibold text-blue-500">NestJS, Express, Fastify</span>) para backend y en 
+            frameworks modernos de frontend como <span class="font-semibold text-cyan-600">React, Angular, Astro</span>.
+          </p>
+
+          <p class="relative pl-6 border-l-4 border-blue-500">
+            Especializado en el diseño de <span class="font-bold text-purple-600">microservicios escalables</span>, APIs RESTful/GraphQL y documentación con Swagger/OpenAPI. Dominio de Prisma y TypeORM para entornos SQL y NoSQL.
+          </p>
+
+          <p class="relative pl-6 border-l-4 border-green-500">
+            Experiencia en <span class="font-bold text-orange-500">AWS, Azure y GCP</span>, CI/CD con Docker y GitHub Actions, y en la automatización de pruebas de extremo a extremo 
+            con <span class="font-semibold text-green-600">Playwright y Puppeteer</span>.
+          </p>
+
+          <p class="relative pl-6 border-l-4 border-yellow-500">
+            Enfocado en el <span class="font-bold text-yellow-600">rendimiento de las aplicaciones</span>, la automatización de procesos y la reducción 
+            de los tiempos de despliegue. Poseo experiencia adicional en <span class="font-semibold text-indigo-600">.NET y Spring Boot</span>.
+          </p>
+
+          <div class="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 p-6 rounded-xl border-l-4 border-red-500">
+            <p class="font-semibold text-red-700 dark:text-red-300">
+              ✓ Reconocido por generar mejoras operativas medibles mediante soluciones <span class="font-bold">robustas y seguras</span> en la nube.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right - Key Metrics -->
+        <div class="space-y-6">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+            <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Áreas de Expertise</h3>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">Backend Architecture</h4>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">Microservicios, APIs RESTful/GraphQL, Clean Architecture</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">Cloud Infrastructure</h4>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">AWS, Azure, GCP - Despliegue y orquestación</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">DevOps & Automation</h4>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">CI/CD, Docker, GitHub Actions, RPA</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">Frontend Development</h4>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">React, Angular, Astro, Next.js</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-red-500 to-red-700 rounded-2xl p-8 shadow-xl text-white">
+            <h3 class="text-2xl font-bold mb-4">Impacto Real</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-lg">70% reducción en llamadas operativas</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-lg">60% mejora en eficiencia operativa</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-lg">Reducción drástica en tiempos de despliegue</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="max-w-5xl mx-auto px-10">

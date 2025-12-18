@@ -1,0 +1,39 @@
+---
+interface Props {
+  strings: string[];
+  className?: string;
+}
+
+const { strings, className = "" } = Astro.props;
+const stringsJson = JSON.stringify(strings);
+---
+
+<span class={`typed-text ${className}`} data-strings={stringsJson}></span>
+
+<script>
+  import Typed from 'typed.js';
+
+  function initTyped() {
+    const typedElements = document.querySelectorAll('.typed-text');
+    
+    typedElements.forEach(element => {
+      const strings = JSON.parse(element.getAttribute('data-strings') || '[]');
+      
+      new Typed(element, {
+        strings: strings,
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        loop: true,
+        showCursor: true,
+        cursorChar: '|',
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTyped);
+  } else {
+    initTyped();
+  }
+</script>
