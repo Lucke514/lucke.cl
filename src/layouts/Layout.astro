@@ -32,7 +32,7 @@ const socialImageURL = new URL(ogImage, siteUrl);
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Lucas Gonzalez" />
-    <meta name="keywords" content="Software Engineer, Full Stack Developer, Node.js, NestJS, React, Angular, Astro, AWS, Azure, GCP, Microservicios, Backend Developer, Cloud Architecture, DevOps, CI/CD" />
+    <meta name="keywords" content="Software Engineer Chile, Full Stack Developer Santiago, Desarrollador Node.js, NestJS Developer, React Developer, Next.js, Angular, Astro, TypeScript, JavaScript, AWS, Azure, GCP, Microservicios, Backend Developer, Cloud Architecture, DevOps, CI/CD, Docker, Kubernetes, PostgreSQL, MySQL, MongoDB, Redis, Prisma, GraphQL, REST API, Arquitectura Hexagonal, Clean Architecture, Scrum, Programador Chile, Desarrollador Web, Lucas González, lucke.cl" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#ef4444" />
@@ -60,42 +60,110 @@ const socialImageURL = new URL(ogImage, siteUrl);
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
     
-    <!-- Schema.org JSON-LD -->
+    <!-- Schema.org JSON-LD - Datos estructurados completos -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Lucas Benjamín González Espinosa",
-      "jobTitle": "Software Engineer",
-      "description": "Software Engineer especializado en desarrollo Full Stack con Node.js, React y arquitecturas cloud",
+      "alternateName": "Lucas González",
+      "jobTitle": "Full Stack Software Engineer",
+      "description": "Software Engineer especializado en desarrollo Full Stack con Node.js, NestJS, React, Next.js y arquitecturas cloud (AWS, Azure, GCP). Más de 3 años de experiencia construyendo soluciones escalables y microservicios.",
       "url": "https://lucke.cl",
+      "image": "https://lucke.cl/img/Avatar.webp",
       "email": "lucas.gonzalez.espinosa@outlook.com",
       "telephone": "+56955164337",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Santiago",
-        "addressCountry": "Chile"
+        "addressRegion": "Región Metropolitana",
+        "addressCountry": "CL"
+      },
+      "nationality": {
+        "@type": "Country",
+        "name": "Chile"
       },
       "sameAs": [
         "https://github.com/lucke514",
         "https://www.linkedin.com/in/lucas-gonzalez-espinosa"
       ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Full Stack Software Engineer",
+        "occupationLocation": {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        "skills": "Node.js, NestJS, React, Next.js, TypeScript, AWS, Azure, Docker, Microservices, REST API, GraphQL, PostgreSQL, MySQL, MongoDB, Prisma, CI/CD"
+      },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Diplomado en Ciberseguridad Industrial",
+          "credentialCategory": "Diploma",
+          "url": "https://www.credly.com/badges/3ac42318-ba42-45d0-9832-33ad0db3af2a"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "CCNA: Introduction to Networks",
+          "credentialCategory": "Certificate",
+          "url": "https://www.credly.com/badges/13bea9eb-d2ac-469d-b491-71aa63547348"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Implementador Líder Ciberseguridad CIP",
+          "credentialCategory": "Certificate"
+        }
+      ],
       "knowsAbout": [
-        "Node.js",
-        "NestJS",
-        "React",
+        "Desarrollo Backend con Node.js",
+        "NestJS Framework",
+        "React y Next.js",
         "Angular",
         "Astro",
         "TypeScript",
-        "JavaScript",
-        "AWS",
-        "Azure",
-        "GCP",
-        "Docker",
-        "Microservices",
-        "REST API",
-        "GraphQL"
-      ]
+        "JavaScript ES6+",
+        "Amazon Web Services (AWS)",
+        "Microsoft Azure",
+        "Google Cloud Platform (GCP)",
+        "Docker y Contenedores",
+        "Arquitectura de Microservicios",
+        "APIs RESTful",
+        "GraphQL",
+        "PostgreSQL",
+        "MySQL",
+        "MongoDB",
+        "Redis",
+        "Prisma ORM",
+        "TypeORM",
+        "CI/CD con GitHub Actions",
+        "Metodologías Ágiles Scrum",
+        "Clean Architecture",
+        "Arquitectura Hexagonal",
+        "Ciberseguridad",
+        "DevOps"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Kibernum"
+      }
+    }
+    </script>
+
+    <!-- Schema.org - WebSite para búsqueda -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Lucas González - Software Engineer",
+      "alternateName": "lucke.cl",
+      "url": "https://lucke.cl",
+      "description": "Portfolio profesional de Lucas González, Software Engineer Full Stack especializado en Node.js, React y arquitecturas cloud",
+      "author": {
+        "@type": "Person",
+        "name": "Lucas González"
+      },
+      "inLanguage": "es-CL"
     }
     </script>
 

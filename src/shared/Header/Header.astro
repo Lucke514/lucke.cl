@@ -1,17 +1,17 @@
 ---
 import ThemeToggle from "components/ThemeToggle/ThemeToggle.astro";
 ---
-<header class="w-screen bg-transparent py-5 px-10 relative z-50">
+<header class="w-screen bg-transparent py-5 px-10 relative z-50" role="banner">
   <div class="flex justify-between items-center max-w-5xl mx-auto">
     <!-- Logo -->
-    <a href="/" class="text-2xl font-bold">
-        <img srcset="/img/Avatar.webp" alt="Avatar" class="w-14 h-14 md:w-16 md:h-16 rounded-full" loading="lazy" />
+    <a href="/" class="text-2xl font-bold" aria-label="Ir al inicio - Lucas González">
+        <img srcset="/img/Avatar.webp" alt="Lucas González - Software Engineer Full Stack especializado en Node.js, React y arquitecturas cloud" class="w-14 h-14 md:w-16 md:h-16 rounded-full" loading="lazy" width="64" height="64" />
     </a>
     
     <!-- Sección derecha (menú y toggle de tema) -->
     <div class="flex flex-row-reverse items-center md:flex-row space-x-4">
       <!-- Menú de navegación en escritorio -->
-      <nav class="hidden md:block">
+      <nav class="hidden md:block" role="navigation" aria-label="Navegación principal">
         <ul class="flex gap-4">
           <li class="group relative">
             <a href="/" class="text-black dark:text-white font-semibold">
