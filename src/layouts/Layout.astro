@@ -22,17 +22,24 @@ const socialImageURL = new URL(ogImage, siteUrl);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!-- DNS Prefetch y Preconnect para recursos críticos -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Lucas Gonzalez" />
     <meta name="keywords" content="Software Engineer, Full Stack Developer, Node.js, NestJS, React, Angular, Astro, AWS, Azure, GCP, Microservicios, Backend Developer, Cloud Architecture, DevOps, CI/CD" />
-    
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#ef4444" />
+
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/webp" href="/img/Avatar.webp" />
     <link rel="apple-touch-icon" href="/img/Avatar.webp" />
@@ -97,8 +104,12 @@ const socialImageURL = new URL(ogImage, siteUrl);
     <link rel="stylesheet" href="/styles/globals.css" />
  </head>
   <body class="bg-gradient-to-b from-red-500/10 to-transparent dark:from-red-500/5 dark:text-white overflow-x-hidden max-w-screen w-screen transition-colors duration-500 min-h-screen">
+    <!-- Skip to main content - Accesibilidad -->
+    <a href="#main-content" class="skip-link">
+      Saltar al contenido principal
+    </a>
     <Header />
-    <main class="w-screen max-w-5xl mx-auto relative z-10">
+    <main id="main-content" class="w-screen max-w-5xl mx-auto relative z-10" role="main">
       <slot />
     </main>
     <Footer />
@@ -116,6 +127,28 @@ const socialImageURL = new URL(ogImage, siteUrl);
       rgb(var(--accent-light)) 30%,
       rgba(var(--accent-dark), 0.1) 60%
     );
+  }
+
+  /* Skip Link - Accesibilidad */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgb(var(--accent));
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    z-index: 9999;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top 0.3s ease;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+    outline: 2px solid white;
+    outline-offset: 2px;
   }
 
   ::selection {

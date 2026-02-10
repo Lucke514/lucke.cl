@@ -1,13 +1,27 @@
 ---
 ---
 
-<div id="tsparticles"></div>
+<div id="tsparticles" aria-hidden="true"></div>
 
 <script>
   import { tsParticles } from "@tsparticles/engine";
   import { loadSlim } from "@tsparticles/slim";
 
   async function loadParticles() {
+    // Respetar preferencia de movimiento reducido
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return; // No cargar partículas si el usuario prefiere movimiento reducido
+    }
+
+    // Detectar dispositivo móvil o pantalla pequeña
+    const isMobile = window.innerWidth < 768;
+    const isLowPerfDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+
+    // Ajustar cantidad de partículas según el dispositivo
+    const particleCount = isMobile || isLowPerfDevice ? 30 : 60;
+    const fpsLimit = isMobile ? 30 : 60;
+
     await loadSlim(tsParticles);
 
     await tsParticles.load({
@@ -18,24 +32,24 @@
             value: "transparent",
           },
         },
-        fpsLimit: 120,
+        fpsLimit: fpsLimit,
         interactivity: {
           events: {
             onClick: {
-              enable: true,
+              enable: !isMobile, // Desactivar click en móviles
               mode: "push",
             },
             onHover: {
-              enable: true,
+              enable: !isMobile, // Desactivar hover en móviles
               mode: "repulse",
             },
           },
           modes: {
             push: {
-              quantity: 4,
+              quantity: 2,
             },
             repulse: {
-              distance: 150,
+              distance: 100,
               duration: 0.4,
             },
           },
@@ -48,7 +62,7 @@
             color: "#ef4444",
             distance: 150,
             enable: true,
-            opacity: 0.3,
+            opacity: 0.2,
             width: 1,
           },
           move: {
@@ -58,34 +72,39 @@
               default: "bounce",
             },
             random: false,
-            speed: 1,
+            speed: isMobile ? 0.5 : 1,
             straight: false,
           },
           number: {
             density: {
               enable: true,
             },
-            value: 80,
+            value: particleCount,
           },
           opacity: {
-            value: 0.5,
+            value: 0.4,
           },
           shape: {
-            type: ["circle", "triangle"],
+            type: "circle",
           },
           size: {
-            value: { min: 1, max: 3 },
+            value: { min: 1, max: 2 },
           },
         },
         detectRetina: true,
+        pauseOnBlur: true, // Pausar cuando la pestaña no está activa
+        pauseOnOutsideViewport: true, // Pausar cuando no está en viewport
       },
     });
   }
 
-  if (document.readyState === "loading") {
+  // Usar requestIdleCallback para cargar en momento óptimo
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => loadParticles(), { timeout: 2000 });
+  } else if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", loadParticles);
   } else {
-    loadParticles();
+    setTimeout(loadParticles, 100);
   }
 </script>
 
@@ -98,5 +117,13 @@
     left: 0;
     z-index: 0;
     pointer-events: none;
+    will-change: transform;
+    contain: strict;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #tsparticles {
+      display: none;
+    }
   }
 </style>

@@ -1,0 +1,50 @@
+# Headers de caché para recursos estáticos
+# Funciona en Netlify y otros hosting que soporten _headers
+
+# Assets con hash en el nombre (inmutables)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fuentes
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Imágenes
+/img/*
+  Cache-Control: public, max-age=2592000
+
+/*.webp
+  Cache-Control: public, max-age=2592000
+
+/*.png
+  Cache-Control: public, max-age=2592000
+
+/*.jpg
+  Cache-Control: public, max-age=2592000
+
+/*.svg
+  Cache-Control: public, max-age=2592000
+
+# CSS y JS estáticos
+/styles/*
+  Cache-Control: public, max-age=86400
+
+# HTML (caché corto para actualizaciones)
+/*.html
+  Cache-Control: public, max-age=3600
+
+/
+  Cache-Control: public, max-age=3600
+
+# Security headers
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

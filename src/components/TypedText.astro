@@ -14,11 +14,18 @@ const stringsJson = JSON.stringify(strings);
   import Typed from 'typed.js';
 
   function initTyped() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const typedElements = document.querySelectorAll('.typed-text');
-    
+
     typedElements.forEach(element => {
       const strings = JSON.parse(element.getAttribute('data-strings') || '[]');
-      
+
+      // Si prefiere movimiento reducido, mostrar texto estático
+      if (prefersReducedMotion) {
+        (element as HTMLElement).textContent = strings[0] || '';
+        return;
+      }
+
       new Typed(element, {
         strings: strings,
         typeSpeed: 50,

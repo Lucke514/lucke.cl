@@ -1,0 +1,9 @@
+# Robots.txt para lucke.cl
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lucke.cl/sitemap-index.xml
+
+# Bloquear archivos de desarrollo
+Disallow: /_astro/*.map
