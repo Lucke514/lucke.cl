@@ -1,273 +1,176 @@
+---
+interface Experience {
+    company: string;
+    letter: string;
+    role: string;
+    startDate: Date;
+    endDate: Date | null;
+    color: string;
+    description?: string;
+    tasks: string[];
+    tags: string[];
+    isLast?: boolean;
+}
+
+const MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+function formatDate(date: Date | null): string {
+    if (!date) return 'Presente';
+    return `${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function calculateDuration(startDate: Date, endDate: Date | null): string {
+    const end = endDate || new Date();
+
+    let months = (end.getFullYear() - startDate.getFullYear()) * 12;
+    months += end.getMonth() - startDate.getMonth();
+    months += 1; // Incluir el mes actual
+
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+
+    if (years === 0) {
+        return `${remainingMonths} ${remainingMonths === 1 ? 'mes' : 'meses'}`;
+    } else if (remainingMonths === 0) {
+        return `${years} ${years === 1 ? 'año' : 'años'}`;
+    } else {
+        return `${years} ${years === 1 ? 'año' : 'años'} ${remainingMonths} ${remainingMonths === 1 ? 'mes' : 'meses'}`;
+    }
+}
+
+const experiences: Experience[] = [
+    {
+        company: 'Kibernum',
+        letter: 'K',
+        role: 'Full Stack Software Engineer (Semi Senior+)',
+        startDate: new Date(2026, 0), // Ene 2026
+        endDate: null,
+        color: 'orange',
+        tasks: [
+            'Desarrollo de aplicaciones full stack con NestJS en backend y React con Next.js en frontend, aplicando arquitectura hexagonal para mantener código limpio y desacoplado',
+            'Implementación y gestión de contenido mediante Strapi como CMS headless, facilitando la administración de contenido dinámico',
+            'Gestión de tareas y seguimiento de proyectos mediante Jira bajo metodología Scrum, asegurando entregas ágiles y coordinación efectiva del equipo',
+            'Containerización de aplicaciones con Docker y orquestación de despliegues, utilizando GitLab para CI/CD y control de versiones'
+        ],
+        tags: ['NestJS', 'React', 'Next.js', 'Strapi', 'Docker', 'GitLab', 'Scrum']
+    },
+    {
+        company: 'Mocca IA',
+        letter: 'M',
+        role: 'Software Engineer (Semi Senior)',
+        startDate: new Date(2025, 10), // Nov 2025
+        endDate: new Date(2026, 0), // Ene 2026
+        color: 'red',
+        description: 'Proyecto trabajando en soluciones empresariales con inteligencia artificial.',
+        tasks: [
+            'Implementé soluciones REST API con Node.js + Express, integradas con aplicaciones frontend en React, optimizando la comunicación entre servicios y la gestión de datos',
+            'Diseñé e integré agentes con inteligencia artificial dentro de soluciones tecnológicas empresariales, mejorando la automatización de procesos y la toma de decisiones',
+            'Trabajé con infraestructura en Microsoft Azure para el despliegue y orquestación de microservicios, aplicando buenas prácticas de escalabilidad y seguridad en la nube',
+            'Participé en la planificación de arquitectura de software, aplicando principios Clean Architecture y asegurando mantenibilidad en entornos distribuidos'
+        ],
+        tags: ['Node.js', 'Express', 'React', 'Azure', 'IA']
+    },
+    {
+        company: 'GESTPYME',
+        letter: 'G',
+        role: 'Full Stack Developer (Semi Senior)',
+        startDate: new Date(2024, 5), // Jun 2024
+        endDate: new Date(2025, 10), // Nov 2025
+        color: 'blue',
+        tasks: [
+            'Implementé pipelines de CI/CD con Docker + GitHub Actions, reduciendo significativamente los tiempos de despliegue',
+            'Desarrollé microservicios en Node.js (NestJS) para mensajería y documentos vía WhatsApp, con integración de chatbots de ventas y comunicación en tiempo real mediante WebSockets',
+            'Automaticé procesos empresariales conectando microservicios de facturación electrónica (SII) mediante Python + Cron',
+            'Desarrollé un microservicio RPA (Robotic Process Automation) en NestJS para automatizar la subida de contratos de trabajo, incorporando validaciones y carga masiva de documentos al ERP',
+            'Diseñé una plataforma de empleo integrada al ERP utilizando Node.js + Prisma, conectada al módulo de personal para publicación y gestión de ofertas laborales',
+            'Construí una herramienta de gestión de agenda con notificaciones en tiempo real (correo, WhatsApp, Zoom), optimizando la coordinación interna de reuniones',
+            'Desarrollé un sistema de gestión de órdenes de trabajo (NestJS + Prisma + MySQL), mejorando trazabilidad y tiempos de resolución',
+            'Desarrollé integraciones dentro de un microservicio TCP utilizando Redis para comunicación distribuida y Strapi como CMS headless, permitiendo el manejo centralizado de productos y sincronización con el ecosistema interno de la empresa'
+        ],
+        tags: ['NestJS', 'Prisma', 'Docker', 'CI/CD', 'RPA', 'Redis', 'Strapi']
+    },
+    {
+        company: 'Freelance',
+        letter: 'F',
+        role: 'Full Stack Developer (Semi Senior)',
+        startDate: new Date(2023, 2), // Mar 2023
+        endDate: null,
+        color: 'green',
+        tasks: [
+            'Desarrollé una aplicación web de gestión empresarial (Node.js + PostgreSQL) para administrar clientes, bodegas e inventarios, con arquitectura modular y escalable',
+            'Implementé soluciones de optimización para radiotaxis, reduciendo un <strong>70%</strong> las llamadas entre conductores y la central mediante APIs y sockets',
+            'Diseñé microservicios escalables con soporte para pasarelas de pago, bases de datos SQL y NoSQL y operaciones CRUD seguras'
+        ],
+        tags: ['Node.js', 'PostgreSQL', 'APIs', 'Java']
+    },
+    {
+        company: 'Hospital de Ovalle',
+        letter: 'H',
+        role: 'Practicante en Desarrollo de Software',
+        startDate: new Date(2024, 0), // Ene 2024
+        endDate: new Date(2024, 2), // Mar 2024
+        color: 'purple',
+        description: 'Desarrollé una aplicación para optimizar la entrega de medicamentos, logrando una mejora del <strong>60%</strong> en eficiencia operativa, utilizando WebSockets, HTTP y APIs de voz.',
+        tasks: [],
+        tags: ['WebSockets', 'Node.js', 'APIs'],
+        isLast: true
+    }
+];
+---
+
 <main class="relative space-y-12">
-    <!-- Kibernum -->
-    <article class="group relative">
-        <div class="flex gap-6">
-            <div class="flex flex-col items-center">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <span class="text-white font-bold text-lg">K</span>
-                </div>
-                <div class="w-0.5 h-full bg-gradient-to-b from-orange-400 to-transparent mt-4"></div>
-            </div>
-
-            <div class="flex-1 pb-12">
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                    <time class="text-sm font-medium text-orange-600 dark:text-orange-400">Ene 2026 - Presente</time>
-                    <span class="text-gray-400">•</span>
-                    <span class="text-sm text-gray-600 dark:text-gray-400">1 mes</span>
+    {experiences.map((exp) => (
+        <article class="group relative">
+            <div class="flex gap-6">
+                <div class="flex flex-col items-center">
+                    <div class={`w-12 h-12 rounded-xl bg-gradient-to-br from-${exp.color}-400 to-${exp.color}-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
+                        <span class="text-white font-bold text-lg">{exp.letter}</span>
+                    </div>
+                    <div class={`w-0.5 ${exp.isLast ? 'h-20' : 'h-full'} bg-gradient-to-b from-${exp.color}-400 to-transparent mt-4`}></div>
                 </div>
 
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                    Full Stack Software Engineer (Semi Senior+)
-                </h3>
-                <p class="text-lg text-orange-600 dark:text-orange-400 font-medium mb-4">Kibernum</p>
+                <div class={`flex-1 ${exp.isLast ? 'pb-8' : 'pb-12'}`}>
+                    <div class="flex flex-wrap items-center gap-3 mb-2">
+                        <time class={`text-sm font-medium text-${exp.color}-600 dark:text-${exp.color}-400`}>
+                            {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                        </time>
+                        <span class="text-gray-400">•</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">
+                            {calculateDuration(exp.startDate, exp.endDate)}
+                        </span>
+                    </div>
 
-                <div class="prose dark:prose-invert max-w-none">
-                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
-                        <li class="flex gap-3">
-                            <span class="text-orange-500 font-bold">→</span>
-                            <span>Desarrollo de aplicaciones full stack con NestJS en backend y React con Next.js en frontend, aplicando arquitectura hexagonal para mantener código limpio y desacoplado</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-orange-500 font-bold">→</span>
-                            <span>Implementación y gestión de contenido mediante Strapi como CMS headless, facilitando la administración de contenido dinámico</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-orange-500 font-bold">→</span>
-                            <span>Gestión de tareas y seguimiento de proyectos mediante Jira bajo metodología Scrum, asegurando entregas ágiles y coordinación efectiva del equipo</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-orange-500 font-bold">→</span>
-                            <span>Containerización de aplicaciones con Docker y orquestación de despliegues, utilizando GitLab para CI/CD y control de versiones</span>
-                        </li>
-                    </ul>
-                </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                        {exp.role}
+                    </h3>
+                    <p class={`text-lg text-${exp.color}-600 dark:text-${exp.color}-400 font-medium mb-4`}>{exp.company}</p>
 
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">NestJS</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">React</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Next.js</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Strapi</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Docker</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">GitLab</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Scrum</span>
-                </div>
-            </div>
-        </div>
-    </article>
+                    <div class="prose dark:prose-invert max-w-none">
+                        {exp.description && (
+                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" set:html={exp.description} />
+                        )}
 
-    <!-- Mocca IA -->
-    <article class="group relative">
-        <div class="flex gap-6">
-            <div class="flex flex-col items-center">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <span class="text-white font-bold text-lg">M</span>
-                </div>
-                <div class="w-0.5 h-full bg-gradient-to-b from-red-400 to-transparent mt-4"></div>
-            </div>
+                        {exp.tasks.length > 0 && (
+                            <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                                {exp.tasks.map((task) => (
+                                    <li class="flex gap-3">
+                                        <span class={`text-${exp.color}-500 font-bold`}>→</span>
+                                        <span set:html={task} />
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
 
-            <div class="flex-1 pb-12">
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                    <time class="text-sm font-medium text-red-600 dark:text-red-400">Oct 2025 - Ene 2026</time>
-                    <span class="text-gray-400">•</span>
-                    <span class="text-sm text-gray-600 dark:text-gray-400">4 meses</span>
-                </div>
-
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                    Software Engineer (Semi Senior)
-                </h3>
-                <p class="text-lg text-red-600 dark:text-red-400 font-medium mb-4">Mocca IA</p>
-
-                <div class="prose dark:prose-invert max-w-none">
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                        Proyecto de 4 meses trabajando en soluciones empresariales con inteligencia artificial.
-                    </p>
-
-                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
-                        <li class="flex gap-3">
-                            <span class="text-red-500 font-bold">→</span>
-                            <span>Implementé soluciones REST API con Node.js + Express, integradas con aplicaciones frontend en React, optimizando la comunicación entre servicios y la gestión de datos</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-red-500 font-bold">→</span>
-                            <span>Diseñé e integré agentes con inteligencia artificial dentro de soluciones tecnológicas empresariales, mejorando la automatización de procesos y la toma de decisiones</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-red-500 font-bold">→</span>
-                            <span>Trabajé con infraestructura en Microsoft Azure para el despliegue y orquestación de microservicios, aplicando buenas prácticas de escalabilidad y seguridad en la nube</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-red-500 font-bold">→</span>
-                            <span>Participé en la planificación de arquitectura de software, aplicando principios Clean Architecture y asegurando mantenibilidad en entornos distribuidos</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Node.js</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Express</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">React</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Azure</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">IA</span>
+                    <div class={`${exp.isLast ? 'mt-4' : 'mt-6'} flex flex-wrap gap-2`}>
+                        {exp.tags.map((tag) => (
+                            <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-    </article>
-
-    <!-- GESTPYME -->
-    <article class="group relative">
-        <div class="flex gap-6">
-            <div class="flex flex-col items-center">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <span class="text-white font-bold text-lg">G</span>
-                </div>
-                <div class="w-0.5 h-full bg-gradient-to-b from-blue-400 to-transparent mt-4"></div>
-            </div>
-
-            <div class="flex-1 pb-12">
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                    <time class="text-sm font-medium text-blue-600 dark:text-blue-400">Jun 2024 - Oct 2025</time>
-                    <span class="text-gray-400">•</span>
-                    <span class="text-sm text-gray-600 dark:text-gray-400">1 año 5 meses</span>
-                </div>
-
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                    Full Stack Developer (Semi Senior)
-                </h3>
-                <p class="text-lg text-blue-600 dark:text-blue-400 font-medium mb-4">GESTPYME</p>
-
-                <div class="prose dark:prose-invert max-w-none">
-                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Implementé pipelines de CI/CD con Docker + GitHub Actions, reduciendo significativamente los tiempos de despliegue</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Desarrollé microservicios en Node.js (NestJS) para mensajería y documentos vía WhatsApp, con integración de chatbots de ventas y comunicación en tiempo real mediante WebSockets</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Automaticé procesos empresariales conectando microservicios de facturación electrónica (SII) mediante Python + Cron</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Desarrollé un microservicio RPA (Robotic Process Automation) en NestJS para automatizar la subida de contratos de trabajo, incorporando validaciones y carga masiva de documentos al ERP</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Diseñé una plataforma de empleo integrada al ERP utilizando Node.js + Prisma, conectada al módulo de personal para publicación y gestión de ofertas laborales</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Construí una herramienta de gestión de agenda con notificaciones en tiempo real (correo, WhatsApp, Zoom), optimizando la coordinación interna de reuniones</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Desarrollé un sistema de gestión de órdenes de trabajo (NestJS + Prisma + MySQL), mejorando trazabilidad y tiempos de resolución</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-blue-500 font-bold">→</span>
-                            <span>Desarrollé integraciones dentro de un microservicio TCP utilizando Redis para comunicación distribuida y Strapi como CMS headless, permitiendo el manejo centralizado de productos y sincronización con el ecosistema interno de la empresa</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">NestJS</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Prisma</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Docker</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">CI/CD</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">RPA</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Redis</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Strapi</span>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <!-- Freelance -->
-    <article class="group relative">
-        <div class="flex gap-6">
-            <div class="flex flex-col items-center">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <span class="text-white font-bold text-lg">F</span>
-                </div>
-                <div class="w-0.5 h-full bg-gradient-to-b from-green-400 to-transparent mt-4"></div>
-            </div>
-
-            <div class="flex-1 pb-12">
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                    <time class="text-sm font-medium text-green-600 dark:text-green-400">Mar 2023 - Presente</time>
-                    <span class="text-gray-400">•</span>
-                    <span class="text-sm text-gray-600 dark:text-gray-400">2 años 11 meses</span>
-                </div>
-
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                    Full Stack Developer (Semi Senior)
-                </h3>
-                <p class="text-lg text-green-600 dark:text-green-400 font-medium mb-4">Freelance</p>
-
-                <div class="prose dark:prose-invert max-w-none">
-                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
-                        <li class="flex gap-3">
-                            <span class="text-green-500 font-bold">→</span>
-                            <span>Desarrollé una aplicación web de gestión empresarial (Node.js + PostgreSQL) para administrar clientes, bodegas e inventarios, con arquitectura modular y escalable</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-green-500 font-bold">→</span>
-                            <span>Implementé soluciones de optimización para radiotaxis, reduciendo un <strong>70%</strong> las llamadas entre conductores y la central mediante APIs y sockets</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-green-500 font-bold">→</span>
-                            <span>Diseñé microservicios escalables con soporte para pasarelas de pago, bases de datos SQL y NoSQL y operaciones CRUD seguras</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Node.js</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">PostgreSQL</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">APIs</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Java</span>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <!-- Hospital de Ovalle - Software -->
-    <article class="group relative">
-        <div class="flex gap-6">
-            <div class="flex flex-col items-center">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <span class="text-white font-bold text-lg">H</span>
-                </div>
-                <div class="w-0.5 h-20 bg-gradient-to-b from-purple-400 to-transparent mt-4"></div>
-            </div>
-
-            <div class="flex-1 pb-8">
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                    <time class="text-sm font-medium text-purple-600 dark:text-purple-400">Ene 2024 - Mar 2024</time>
-                    <span class="text-gray-400">•</span>
-                    <span class="text-sm text-gray-600 dark:text-gray-400">3 meses</span>
-                </div>
-
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                    Practicante en Desarrollo de Software
-                </h3>
-                <p class="text-lg text-purple-600 dark:text-purple-400 font-medium mb-4">Hospital de Ovalle</p>
-
-                <div class="prose dark:prose-invert max-w-none">
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        Desarrollé una aplicación para optimizar la entrega de medicamentos, logrando una mejora del <strong>60%</strong> en eficiencia operativa, utilizando WebSockets, HTTP y APIs de voz.
-                    </p>
-                </div>
-
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">WebSockets</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">Node.js</span>
-                    <span class="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-200 dark:border-gray-700">APIs</span>
-                </div>
-            </div>
-        </div>
-    </article>
+        </article>
+    ))}
 </main>
