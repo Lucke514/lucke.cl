@@ -1,0 +1,90 @@
+---
+import { experiences, formatDate, calculateDuration } from '../../data/experience';
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const durationLabels = {
+  year: t('experience.year'),
+  years: t('experience.years'),
+  month: t('experience.month'),
+  months: t('experience.months'),
+};
+---
+
+<section class="max-w-5xl mx-auto px-6 lg:px-10 py-24" id="experience-seccion">
+  <div class="text-center mb-16" data-animate>
+    <span class="text-red-500 font-mono text-sm tracking-wider uppercase">{t('experience.kicker')}</span>
+    <h2 class="text-4xl sm:text-5xl font-bold mt-4 mb-6">{t('experience.title')}</h2>
+    <div class="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
+  </div>
+
+  <div class="relative">
+    <!-- Línea de progreso animada con el scroll (GSAP) -->
+    <div class="absolute left-[23px] top-0 bottom-0 w-0.5 bg-zinc-200 dark:bg-zinc-800" aria-hidden="true">
+      <div id="exp-progress" class="absolute inset-0 bg-red-500 origin-top" style="transform: scaleY(0)"></div>
+    </div>
+
+    <div class="space-y-12">
+      {experiences.map((exp) => (
+        <article class="group relative" data-animate>
+          <div class="flex gap-6">
+            <div class="flex flex-col items-center shrink-0">
+              <div class={`w-12 h-12 rounded-xl bg-gradient-to-br from-${exp.color}-400 to-${exp.color}-600 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 relative z-10`}>
+                <span class="text-white font-bold text-lg">{exp.letter}</span>
+              </div>
+            </div>
+
+            <div class={`flex-1 ${exp.isLast ? 'pb-2' : 'pb-6'}`}>
+              <div class="flex flex-wrap items-center gap-3 mb-2">
+                <time class={`text-sm font-medium text-${exp.color}-600 dark:text-${exp.color}-400`}>
+                  {formatDate(exp.startDate, lang, t('experience.present'))} - {formatDate(exp.endDate, lang, t('experience.present'))}
+                </time>
+                <span class="text-zinc-400">•</span>
+                <span class="text-sm text-zinc-600 dark:text-zinc-400">
+                  {calculateDuration(exp.startDate, exp.endDate, durationLabels)}
+                </span>
+              </div>
+
+              <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-1">
+                {exp.role[lang]}
+              </h3>
+              <p class={`text-lg text-${exp.color}-600 dark:text-${exp.color}-400 font-medium mb-4`}>{exp.company}</p>
+
+              <div class="max-w-none">
+                {exp.description && (
+                  <p class="text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4" set:html={exp.description[lang]} />
+                )}
+
+                {exp.tasks.length > 0 && (
+                  <ul class="space-y-3 text-zinc-700 dark:text-zinc-300">
+                    {exp.tasks.map((task) => (
+                      <li class="flex gap-3">
+                        <span class={`text-${exp.color}-500 font-bold`}>→</span>
+                        <span set:html={task[lang]} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div class="mt-5 flex flex-wrap gap-2">
+                {exp.tags.map((tag) => (
+                  <span class="px-3 py-1.5 text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-md border border-zinc-200 dark:border-zinc-700">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

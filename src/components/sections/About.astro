@@ -1,0 +1,81 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const expertise = [
+  { title: t('about.expertise.backend.title'), desc: t('about.expertise.backend.desc') },
+  { title: t('about.expertise.cloud.title'), desc: t('about.expertise.cloud.desc') },
+  { title: t('about.expertise.devops.title'), desc: t('about.expertise.devops.desc') },
+  { title: t('about.expertise.frontend.title'), desc: t('about.expertise.frontend.desc') },
+];
+
+const impacts = [t('about.impact.1'), t('about.impact.2'), t('about.impact.3')];
+---
+
+<section class="relative max-w-6xl mx-auto px-6 lg:px-10 py-24" id="about-seccion">
+  <div class="relative z-10">
+    <!-- Section Header -->
+    <div class="text-center mb-16" data-animate>
+      <span class="text-red-500 font-mono text-sm tracking-wider uppercase">{t('about.kicker')}</span>
+      <h2 class="text-4xl sm:text-5xl font-bold mt-4 mb-6">
+        {t('about.title.pre')} <span class="text-red-500">{t('about.title.highlight')}</span>
+      </h2>
+      <div class="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+      <!-- Left - Description -->
+      <div class="space-y-6 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300" data-animate="left">
+        <p class="relative pl-6 border-l-2 border-red-500">{t('about.p1')}</p>
+        <p class="relative pl-6 border-l-2 border-red-500">{t('about.p2')}</p>
+        <p class="relative pl-6 border-l-2 border-red-500">{t('about.p3')}</p>
+
+        <div class="bg-red-50 dark:bg-red-950/30 p-6 rounded-xl border-l-4 border-red-500">
+          <p class="font-semibold text-red-700 dark:text-red-300">
+            ✓ {t('about.highlight')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Right - Expertise + Impact -->
+      <div class="space-y-6" data-animate="right">
+        <div class="bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-lg border border-zinc-200 dark:border-zinc-800">
+          <h3 class="text-2xl font-bold mb-6 text-zinc-800 dark:text-white">{t('about.expertise.title')}</h3>
+          <div class="space-y-4">
+            {expertise.map((item) => (
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-red-500 rounded-full mt-2 shrink-0"></div>
+                <div>
+                  <h4 class="font-semibold text-zinc-800 dark:text-white">{item.title}</h4>
+                  <p class="text-sm text-zinc-600 dark:text-zinc-400">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="bg-zinc-900 dark:bg-zinc-900 rounded-2xl p-8 shadow-lg text-white border border-zinc-800">
+          <h3 class="text-2xl font-bold mb-4">{t('about.impact.title')}</h3>
+          <div class="space-y-3">
+            {impacts.map((impact) => (
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-red-500 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-lg">{impact}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

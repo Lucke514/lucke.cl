@@ -1,0 +1,128 @@
+---
+// Animaciones de scroll globales con GSAP ScrollTrigger.
+// Convenciones:
+//   [data-animate]              → fade + slide-up al entrar en viewport
+//   [data-animate="left|right"] → slide lateral
+//   [data-animate-group]        → anima sus hijos directos con stagger
+//   #hero-title                 → entrada con SplitText
+//   #exp-progress               → línea de progreso de la timeline de experiencia
+---
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { SplitText } from 'gsap/SplitText';
+
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  // Red de seguridad: si algo falla, el contenido nunca debe quedar oculto
+  function revealAll() {
+    document
+      .querySelectorAll<HTMLElement>('[data-animate], [data-animate-hero]')
+      .forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+  }
+
+  try {
+    initAnimations();
+  } catch {
+    revealAll();
+  }
+
+  function initAnimations() {
+  const mm = gsap.matchMedia();
+
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    // Título del hero: entrada con SplitText
+    const heroTitle = document.getElementById('hero-title');
+    if (heroTitle) {
+      const split = SplitText.create(heroTitle, { type: 'chars' });
+      gsap.from(split.chars, {
+        opacity: 0,
+        y: 40,
+        rotateX: -60,
+        duration: 0.7,
+        ease: 'back.out(1.6)',
+        stagger: 0.025,
+      });
+    }
+
+    // Elementos del hero (no dependen de scroll, entran al cargar)
+    gsap.to('[data-animate-hero]', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.12,
+      delay: 0.3,
+    });
+
+    // Reveal por sección
+    document.querySelectorAll<HTMLElement>('[data-animate]').forEach((el) => {
+      const dir = el.dataset.animate;
+      const from: gsap.TweenVars = { opacity: 0, y: 40 };
+      if (dir === 'left') Object.assign(from, { y: 0, x: -60 });
+      if (dir === 'right') Object.assign(from, { y: 0, x: 60 });
+
+      gsap.fromTo(el, from, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      });
+    });
+
+    // Grupos con stagger (tarjetas, grillas de tecnologías, etc.)
+    document.querySelectorAll<HTMLElement>('[data-animate-group]').forEach((group) => {
+      gsap.fromTo(
+        [...group.children],
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: group,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    });
+
+    // Línea de progreso de la experiencia: se dibuja con el scroll
+    const progress = document.getElementById('exp-progress');
+    if (progress) {
+      gsap.fromTo(
+        progress,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: 'none',
+          transformOrigin: 'top center',
+          scrollTrigger: {
+            trigger: '#experience-seccion',
+            start: 'top 70%',
+            end: 'bottom 70%',
+            scrub: 0.6,
+          },
+        }
+      );
+    }
+  });
+
+  // Con prefers-reduced-motion: asegurar que todo quede visible
+  mm.add('(prefers-reduced-motion: reduce)', () => {
+    gsap.set('[data-animate], [data-animate-hero]', { opacity: 1, x: 0, y: 0 });
+  });
+  }
+</script>

@@ -1,6 +1,8 @@
 ---
 import Footer from 'shared/Footer/Footer.astro';
 import Header from 'shared/Header/Header.astro';
+import ScrollAnimations from 'components/ScrollAnimations.astro';
+import { getLangFromUrl, useTranslations, getAlternatePath } from '../i18n/utils';
 
 // Tipografía de la página
 import '@fontsource-variable/onest';
@@ -11,21 +13,110 @@ interface Props {
 	ogImage?: string;
 }
 
-const { title, description = "Software Engineer especializado en Node.js, React, microservicios y arquitecturas cloud (AWS, Azure, GCP). +3 años construyendo soluciones escalables.", ogImage = "/img/Avatar.webp" } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { title, description = t('seo.home.description'), ogImage = "/img/Avatar.webp" } = Astro.props;
 
 const siteUrl = Astro.site?.href || 'https://lucke.cl';
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImageURL = new URL(ogImage, siteUrl);
+const alternateES = new URL(getAlternatePath(Astro.url.pathname, 'es'), siteUrl);
+const alternateEN = new URL(getAlternatePath(Astro.url.pathname, 'en'), siteUrl);
+
+const personDescription = lang === 'es'
+	? 'Software Engineer especializado en desarrollo Full Stack con Node.js, NestJS, React, Next.js y arquitecturas cloud (AWS, Azure, GCP). Más de 3 años de experiencia construyendo soluciones escalables y microservicios.'
+	: 'Software Engineer specialized in Full Stack development with Node.js, NestJS, React, Next.js and cloud architectures (AWS, Azure, GCP). 3+ years of experience building scalable solutions and microservices.';
+
+const personSchema = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	"name": "Lucas Benjamín González Espinosa",
+	"alternateName": "Lucas González",
+	"jobTitle": "Full Stack Software Engineer",
+	"description": personDescription,
+	"url": "https://lucke.cl",
+	"image": "https://lucke.cl/img/Avatar.webp",
+	"email": "lucas.gonzalez.espinosa@outlook.com",
+	"telephone": "+56955164337",
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "Santiago",
+		"addressRegion": "Región Metropolitana",
+		"addressCountry": "CL"
+	},
+	"nationality": {
+		"@type": "Country",
+		"name": "Chile"
+	},
+	"sameAs": [
+		"https://github.com/lucke514",
+		"https://www.linkedin.com/in/lucas-gonzalez-espinosa"
+	],
+	"hasOccupation": {
+		"@type": "Occupation",
+		"name": "Full Stack Software Engineer",
+		"occupationLocation": {
+			"@type": "Country",
+			"name": "Chile"
+		},
+		"skills": "Node.js, NestJS, React, Next.js, TypeScript, AWS, Azure, Docker, Microservices, REST API, GraphQL, PostgreSQL, MySQL, MongoDB, Prisma, CI/CD"
+	},
+	"hasCredential": [
+		{
+			"@type": "EducationalOccupationalCredential",
+			"name": "Diplomado en Ciberseguridad Industrial",
+			"credentialCategory": "Diploma",
+			"url": "https://www.credly.com/badges/3ac42318-ba42-45d0-9832-33ad0db3af2a"
+		},
+		{
+			"@type": "EducationalOccupationalCredential",
+			"name": "CCNA: Introduction to Networks",
+			"credentialCategory": "Certificate",
+			"url": "https://www.credly.com/badges/13bea9eb-d2ac-469d-b491-71aa63547348"
+		},
+		{
+			"@type": "EducationalOccupationalCredential",
+			"name": "Implementador Líder Ciberseguridad CIP",
+			"credentialCategory": "Certificate"
+		}
+	],
+	"knowsAbout": [
+		"Node.js", "NestJS", "React", "Next.js", "Angular", "Astro", "TypeScript",
+		"JavaScript ES6+", "Amazon Web Services (AWS)", "Microsoft Azure",
+		"Google Cloud Platform (GCP)", "Docker", "Microservices", "REST APIs",
+		"GraphQL", "PostgreSQL", "MySQL", "MongoDB", "Redis", "Prisma ORM",
+		"TypeORM", "CI/CD", "GitHub Actions", "Scrum", "Clean Architecture",
+		"Hexagonal Architecture", "Cybersecurity", "DevOps"
+	],
+	"knowsLanguage": ["es", "en"],
+	"worksFor": {
+		"@type": "Organization",
+		"name": "Kibernum"
+	}
+};
+
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"name": "Lucas González - Software Engineer",
+	"alternateName": "lucke.cl",
+	"url": "https://lucke.cl",
+	"description": lang === 'es'
+		? 'Portfolio profesional de Lucas González, Software Engineer Full Stack especializado en Node.js, React y arquitecturas cloud'
+		: 'Professional portfolio of Lucas González, Full Stack Software Engineer specialized in Node.js, React and cloud architectures',
+	"author": {
+		"@type": "Person",
+		"name": "Lucas González"
+	},
+	"inLanguage": lang === 'es' ? 'es-CL' : 'en-US'
+};
 ---
 <!DOCTYPE html>
-<html lang="es" class="dark scroll-smooth">
+<html lang={lang} class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- DNS Prefetch y Preconnect para recursos críticos -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -35,152 +126,53 @@ const socialImageURL = new URL(ogImage, siteUrl);
     <meta name="keywords" content="Software Engineer Chile, Full Stack Developer Santiago, Desarrollador Node.js, NestJS Developer, React Developer, Next.js, Angular, Astro, TypeScript, JavaScript, AWS, Azure, GCP, Microservicios, Backend Developer, Cloud Architecture, DevOps, CI/CD, Docker, Kubernetes, PostgreSQL, MySQL, MongoDB, Redis, Prisma, GraphQL, REST API, Arquitectura Hexagonal, Clean Architecture, Scrum, Programador Chile, Desarrollador Web, Lucas González, lucke.cl" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
-    <meta name="theme-color" content="#ef4444" />
+    <meta name="theme-color" content="#0c0a09" />
 
-    <!-- Canonical URL -->
+    <!-- Canonical y alternates por idioma -->
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="es" href={alternateES} />
+    <link rel="alternate" hreflang="en" href={alternateEN} />
+    <link rel="alternate" hreflang="x-default" href={alternateES} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="/img/Avatar.webp" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/img/Avatar.webp" />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
-    <meta property="og:locale" content="es_CL" />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CL' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_CL'} />
     <meta property="og:site_name" content="Lucas Gonzalez - Software Engineer" />
-    
+
     <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
-    
-    <!-- Schema.org JSON-LD - Datos estructurados completos -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Lucas Benjamín González Espinosa",
-      "alternateName": "Lucas González",
-      "jobTitle": "Full Stack Software Engineer",
-      "description": "Software Engineer especializado en desarrollo Full Stack con Node.js, NestJS, React, Next.js y arquitecturas cloud (AWS, Azure, GCP). Más de 3 años de experiencia construyendo soluciones escalables y microservicios.",
-      "url": "https://lucke.cl",
-      "image": "https://lucke.cl/img/Avatar.webp",
-      "email": "lucas.gonzalez.espinosa@outlook.com",
-      "telephone": "+56955164337",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Santiago",
-        "addressRegion": "Región Metropolitana",
-        "addressCountry": "CL"
-      },
-      "nationality": {
-        "@type": "Country",
-        "name": "Chile"
-      },
-      "sameAs": [
-        "https://github.com/lucke514",
-        "https://www.linkedin.com/in/lucas-gonzalez-espinosa"
-      ],
-      "hasOccupation": {
-        "@type": "Occupation",
-        "name": "Full Stack Software Engineer",
-        "occupationLocation": {
-          "@type": "Country",
-          "name": "Chile"
-        },
-        "skills": "Node.js, NestJS, React, Next.js, TypeScript, AWS, Azure, Docker, Microservices, REST API, GraphQL, PostgreSQL, MySQL, MongoDB, Prisma, CI/CD"
-      },
-      "hasCredential": [
-        {
-          "@type": "EducationalOccupationalCredential",
-          "name": "Diplomado en Ciberseguridad Industrial",
-          "credentialCategory": "Diploma",
-          "url": "https://www.credly.com/badges/3ac42318-ba42-45d0-9832-33ad0db3af2a"
-        },
-        {
-          "@type": "EducationalOccupationalCredential",
-          "name": "CCNA: Introduction to Networks",
-          "credentialCategory": "Certificate",
-          "url": "https://www.credly.com/badges/13bea9eb-d2ac-469d-b491-71aa63547348"
-        },
-        {
-          "@type": "EducationalOccupationalCredential",
-          "name": "Implementador Líder Ciberseguridad CIP",
-          "credentialCategory": "Certificate"
-        }
-      ],
-      "knowsAbout": [
-        "Desarrollo Backend con Node.js",
-        "NestJS Framework",
-        "React y Next.js",
-        "Angular",
-        "Astro",
-        "TypeScript",
-        "JavaScript ES6+",
-        "Amazon Web Services (AWS)",
-        "Microsoft Azure",
-        "Google Cloud Platform (GCP)",
-        "Docker y Contenedores",
-        "Arquitectura de Microservicios",
-        "APIs RESTful",
-        "GraphQL",
-        "PostgreSQL",
-        "MySQL",
-        "MongoDB",
-        "Redis",
-        "Prisma ORM",
-        "TypeORM",
-        "CI/CD con GitHub Actions",
-        "Metodologías Ágiles Scrum",
-        "Clean Architecture",
-        "Arquitectura Hexagonal",
-        "Ciberseguridad",
-        "DevOps"
-      ],
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Kibernum"
-      }
-    }
-    </script>
 
-    <!-- Schema.org - WebSite para búsqueda -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Lucas González - Software Engineer",
-      "alternateName": "lucke.cl",
-      "url": "https://lucke.cl",
-      "description": "Portfolio profesional de Lucas González, Software Engineer Full Stack especializado en Node.js, React y arquitecturas cloud",
-      "author": {
-        "@type": "Person",
-        "name": "Lucas González"
-      },
-      "inLanguage": "es-CL"
-    }
-    </script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
-    <!-- Preload de CSS global -->
-    <link rel="preload" as="style" href="/styles/globals.css" />
+    <!-- CSS global -->
     <link rel="stylesheet" href="/styles/globals.css" />
  </head>
-  <body class="bg-gradient-to-b from-red-500/10 to-transparent dark:from-red-500/5 dark:text-white overflow-x-hidden max-w-screen w-screen transition-colors duration-500 min-h-screen">
+  <body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 overflow-x-hidden max-w-screen w-screen transition-colors duration-500 min-h-screen">
     <!-- Skip to main content - Accesibilidad -->
     <a href="#main-content" class="skip-link">
-      Saltar al contenido principal
+      {lang === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'}
     </a>
     <Header />
-    <main id="main-content" class="w-screen max-w-5xl mx-auto relative z-10" role="main">
+    <main id="main-content" class="w-full relative z-10" role="main">
       <slot />
     </main>
     <Footer />
+    <ScrollAnimations />
   </body>
 </html>
 
@@ -189,12 +181,6 @@ const socialImageURL = new URL(ogImage, siteUrl);
     --accent: 239, 68, 68; /* red-500 */
     --accent-light: 252, 165, 165; /* red-300 */
     --accent-dark: 153, 27, 27; /* red-800 */
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      rgba(var(--accent-dark), 0.1) 60%
-    );
   }
 
   /* Skip Link - Accesibilidad */
@@ -226,14 +212,18 @@ const socialImageURL = new URL(ogImage, siteUrl);
 
   html {
     font-family: 'Onest Variable', sans-serif;
-    background-size: 224px;
     scroll-behavior: smooth;
+    /* clip (no hidden): recorta los offsets pre-animación de GSAP sin
+       expandir el layout viewport en móvil ni crear scroll horizontal */
+    overflow-x: clip;
   }
 
   body {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    background-attachment: fixed;
+    /* minmax(0,1fr): evita que el min-content de los hijos (p.ej. el slider
+       de tecnologías) expanda la columna más allá del viewport en móvil */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* Custom scrollbar */
@@ -259,57 +249,28 @@ const socialImageURL = new URL(ogImage, siteUrl);
     color-scheme: dark;
   }
 
-  /* Gradient Animation */
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  /* Estado inicial de elementos animados por GSAP (evita FOUC de animación).
+     Si JS no carga, el contenido sigue visible por el fallback de no-js. */
+  html.js [data-animate] {
+    opacity: 0;
   }
 
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 3s ease infinite;
-  }
-
-  /* Floating Animation */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  /* Pulse Glow */
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
-    }
-  }
-
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  html.js [data-animate-hero] {
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-    
+
+    html.js [data-animate],
+    html.js [data-animate-hero] {
+      opacity: 1;
+      transform: none;
+    }
+
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
@@ -318,3 +279,9 @@ const socialImageURL = new URL(ogImage, siteUrl);
     }
   }
 </style>
+
+<script is:inline>
+  // Marca que JS está disponible: las animaciones de scroll solo ocultan
+  // contenido cuando GSAP podrá revelarlo.
+  document.documentElement.classList.add('js');
+</script>

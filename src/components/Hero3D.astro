@@ -1,0 +1,157 @@
+---
+// Fondo 3D del hero: esfera de partículas + icosaedro wireframe con Three.js.
+// Se carga de forma diferida (requestIdleCallback) para no afectar el LCP,
+// y no se carga con prefers-reduced-motion ni cuando WebGL no está disponible.
+---
+<div id="hero-3d" class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+  <!-- Fallback estático: visible siempre, el canvas se dibuja encima -->
+  <div class="absolute inset-0 bg-gradient-to-b from-red-500/10 via-transparent to-transparent dark:from-red-500/5"></div>
+  <canvas id="hero-3d-canvas" class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-1000"></canvas>
+</div>
+
+<script>
+  async function initHero3D() {
+    const canvas = document.getElementById('hero-3d-canvas') as HTMLCanvasElement | null;
+    const container = document.getElementById('hero-3d');
+    if (!canvas || !container) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const THREE = await import('three');
+
+    let renderer: import('three').WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance',
+      });
+    } catch {
+      return; // WebGL no disponible: queda el fondo estático
+    }
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    camera.position.z = 7;
+
+    const isDark = () => document.documentElement.classList.contains('dark');
+
+    // Esfera de partículas
+    const particleCount = isMobile ? 350 : 900;
+    const positions = new Float32Array(particleCount * 3);
+    const radius = 3;
+    for (let i = 0; i < particleCount; i++) {
+      // Distribución uniforme en la esfera (método de Marsaglia)
+      const u = Math.random() * 2 - 1;
+      const theta = Math.random() * Math.PI * 2;
+      const r = radius * (0.85 + Math.random() * 0.3);
+      const s = Math.sqrt(1 - u * u);
+      positions[i * 3] = r * s * Math.cos(theta);
+      positions[i * 3 + 1] = r * s * Math.sin(theta);
+      positions[i * 3 + 2] = r * u;
+    }
+    const particlesGeo = new THREE.BufferGeometry();
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particlesMat = new THREE.PointsMaterial({
+      size: 0.035,
+      transparent: true,
+      opacity: 0.7,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const particles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particles);
+
+    // Icosaedro wireframe central
+    const icoGeo = new THREE.IcosahedronGeometry(1.9, 1);
+    const icoMat = new THREE.MeshBasicMaterial({
+      wireframe: true,
+      transparent: true,
+      opacity: 0.18,
+    });
+    const ico = new THREE.Mesh(icoGeo, icoMat);
+    scene.add(ico);
+
+    const icoInnerGeo = new THREE.IcosahedronGeometry(1.1, 0);
+    const icoInner = new THREE.Mesh(icoInnerGeo, icoMat.clone());
+    (icoInner.material as import('three').MeshBasicMaterial).opacity = 0.3;
+    scene.add(icoInner);
+
+    function applyTheme() {
+      const accent = new THREE.Color(0xef4444); // red-500
+      const neutral = new THREE.Color(isDark() ? 0xfafafa : 0x18181b);
+      particlesMat.color = isDark() ? neutral : new THREE.Color(0x52525b);
+      particlesMat.opacity = isDark() ? 0.7 : 0.45;
+      particlesMat.blending = isDark() ? THREE.AdditiveBlending : THREE.NormalBlending;
+      particlesMat.needsUpdate = true;
+      icoMat.color = accent;
+      (icoInner.material as import('three').MeshBasicMaterial).color = accent;
+    }
+    applyTheme();
+    new MutationObserver(applyTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    function resize() {
+      const { clientWidth: w, clientHeight: h } = container!;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Interacción: parallax con el mouse (solo punteros precisos)
+    const mouse = { x: 0, y: 0 };
+    if (window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('pointermove', (e) => {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+    }
+
+    // Pausar el render cuando el hero no está en pantalla
+    let visible = true;
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    }).observe(container);
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!visible || document.hidden) return;
+
+      const t = clock.getElapsedTime();
+      const scroll = window.scrollY * 0.0006;
+
+      particles.rotation.y = t * 0.05 + scroll;
+      particles.rotation.x = Math.sin(t * 0.1) * 0.1 + scroll * 0.5;
+      ico.rotation.y = -t * 0.08 + scroll * 1.2;
+      ico.rotation.z = t * 0.03;
+      icoInner.rotation.y = t * 0.12 - scroll;
+      icoInner.rotation.x = -t * 0.06;
+
+      // Parallax suave hacia la posición del mouse
+      camera.position.x += (mouse.x * 0.6 - camera.position.x) * 0.04;
+      camera.position.y += (-mouse.y * 0.6 - camera.position.y) * 0.04;
+      camera.lookAt(scene.position);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    canvas.classList.remove('opacity-0');
+  }
+
+  // Diferir la carga de Three.js hasta que el hilo principal esté libre
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => initHero3D(), { timeout: 2500 });
+  } else {
+    setTimeout(() => initHero3D(), 400);
+  }
+</script>

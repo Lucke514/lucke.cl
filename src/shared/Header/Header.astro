@@ -1,79 +1,105 @@
 ---
 import ThemeToggle from "components/ThemeToggle/ThemeToggle.astro";
+import { getLangFromUrl, useTranslations, localizePath, getAlternatePath } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const home = localizePath('/', lang);
+const projects = localizePath('/proyectos', lang);
+const otherLang = lang === 'es' ? 'en' : 'es';
+const switchUrl = getAlternatePath(Astro.url.pathname, otherLang);
+
+const navLinks = [
+  { href: home, label: t('nav.home') },
+  { href: `${home}#about-seccion`, label: t('nav.about') },
+  { href: `${home}#experience-seccion`, label: t('nav.experience') },
+  { href: projects, label: t('nav.projects') },
+  { href: `${home}#contact-seccion`, label: t('nav.contact') },
+];
 ---
-<header class="w-screen bg-transparent py-5 px-10 relative z-50" role="banner">
-  <div class="flex justify-between items-center max-w-5xl mx-auto">
+<header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-zinc-50/70 dark:bg-zinc-950/70 border-b border-zinc-200/60 dark:border-zinc-800/60" role="banner">
+  <div class="flex justify-between items-center max-w-6xl mx-auto py-3 px-6 lg:px-10">
     <!-- Logo -->
-    <a href="/" class="text-2xl font-bold" aria-label="Ir al inicio - Lucas González">
-        <img srcset="/img/Avatar.webp" alt="Lucas González - Software Engineer Full Stack especializado en Node.js, React y arquitecturas cloud" class="w-14 h-14 md:w-16 md:h-16 rounded-full" loading="lazy" width="64" height="64" />
+    <a href={home} class="flex items-center gap-3 group" aria-label={t('nav.logoAria')}>
+      <img src="/img/Avatar.webp" alt="Lucas González" class="w-10 h-10 rounded-full ring-2 ring-transparent group-hover:ring-red-500 transition-all" width="40" height="40" />
+      <span class="font-bold text-lg tracking-tight hidden sm:block">lucke<span class="text-red-500">.cl</span></span>
     </a>
-    
-    <!-- Sección derecha (menú y toggle de tema) -->
-    <div class="flex flex-row-reverse items-center md:flex-row space-x-4">
+
+    <div class="flex items-center gap-2 md:gap-4">
       <!-- Menú de navegación en escritorio -->
-      <nav class="hidden md:block" role="navigation" aria-label="Navegación principal">
-        <ul class="flex gap-4">
-          <li class="group relative">
-            <a href="/" class="text-black dark:text-white font-semibold">
-              Inicio
-              <span
-                class="absolute left-0 -bottom-1 w-0 h-0.5 bg-red-500 dark:bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          </li>
-          <li class="group relative">
-            <a href="/#about-seccion" class="text-black dark:text-white font-semibold">
-              Sobre mí
-              <span
-                class="absolute left-0 -bottom-1 w-0 h-0.5 bg-red-500 dark:bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          </li>
-          <li class="group relative">
-            <a href="/proyectos" class="text-black dark:text-white font-semibold">
-              Proyectos
-              <span
-                class="absolute left-0 -bottom-1 w-0 h-0.5 bg-red-500 dark:bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          </li>
+      <nav class="hidden md:block" role="navigation" aria-label={t('nav.ariaLabel')}>
+        <ul class="flex gap-5 items-center">
+          {navLinks.map(link => (
+            <li class="group relative">
+              <a href={link.href} class="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors">
+                {link.label}
+                <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
 
+      <!-- CV -->
+      <a
+        href="/cv.pdf"
+        target="_blank"
+        rel="noopener"
+        class="hidden md:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg border border-red-500/60 text-red-600 dark:text-red-400 hover:bg-red-500 hover:text-white dark:hover:text-white transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+        </svg>
+        {t('nav.downloadCV')}
+      </a>
+
+      <!-- Selector de idioma -->
+      <a
+        href={switchUrl}
+        class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold rounded-md border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-red-500 hover:text-red-500 dark:hover:text-red-400 transition-colors uppercase"
+        aria-label={otherLang === 'en' ? 'Switch to English' : 'Cambiar a español'}
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15.3 15.3 0 014 9 15.3 15.3 0 01-4 9 15.3 15.3 0 01-4-9 15.3 15.3 0 014-9zm9 9a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        {otherLang}
+      </a>
+
+      <!-- Toggle de tema -->
+      <ThemeToggle />
+
       <!-- Botón del menú desplegable en móvil -->
       <div class="relative md:hidden">
-        <button id="menu-btn" class="text-black dark:text-white focus:outline-none" title="Menú">
-          <!-- Icono del menú hamburguesa -->
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16" />
+        <button id="menu-btn" class="text-zinc-900 dark:text-white focus:outline-none p-1" title={t('nav.menuTitle')} aria-expanded="false" aria-controls="dropdown-menu">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
 
         <!-- Menú desplegable -->
-        <div id="dropdown-menu" class="hidden absolute z-20 right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+        <div id="dropdown-menu" class="hidden absolute z-20 right-0 mt-2 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-xl">
           <ul class="py-1">
-            <li>
-              <a href="/" class="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                Inicio
-              </a>
-            </li>
-            <li>
-              <a href="/#about-seccion" class="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                Sobre mí
-              </a>
-            </li>
-            <li>
-              <a href="/proyectos" class="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                Proyectos
+            {navLinks.map(link => (
+              <li>
+                <a href={link.href} class="block px-4 py-2.5 text-sm text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li class="border-t border-zinc-200 dark:border-zinc-800 mt-1 pt-1">
+              <a href="/cv.pdf" target="_blank" rel="noopener" class="block px-4 py-2.5 text-sm font-semibold text-red-600 dark:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                {t('nav.downloadCV')}
               </a>
             </li>
           </ul>
         </div>
       </div>
-
-      <!-- Toggle de tema -->
-      <ThemeToggle />
     </div>
   </div>
 </header>
+<!-- Espaciador para compensar el header fijo -->
+<div class="h-[64px]" aria-hidden="true"></div>
 
 <!-- Script para controlar el menú desplegable -->
 <script>
@@ -82,13 +108,15 @@ import ThemeToggle from "components/ThemeToggle/ThemeToggle.astro";
     const dropdownMenu = document.getElementById('dropdown-menu') as HTMLDivElement;
 
     menuBtn.addEventListener('click', () => {
-      dropdownMenu.classList.toggle('hidden');
+      const hidden = dropdownMenu.classList.toggle('hidden');
+      menuBtn.setAttribute('aria-expanded', String(!hidden));
     });
 
-    // Opcional: Cerrar el menú al hacer clic fuera de él
-    document.addEventListener('click', (event: any) => {
-      if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+    document.addEventListener('click', (event) => {
+      const target = event.target as Node;
+      if (!menuBtn.contains(target) && !dropdownMenu.contains(target)) {
         dropdownMenu.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
       }
     });
   });

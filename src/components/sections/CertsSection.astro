@@ -1,0 +1,23 @@
+---
+import Certifications from 'components/Certifications/Certifications.astro';
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="max-w-5xl mx-auto px-6 lg:px-10 py-24" id="certs-seccion">
+  <div class="text-center mb-16" data-animate>
+    <span class="text-red-500 font-mono text-sm tracking-wider uppercase">{t('certs.kicker')}</span>
+    <h2 class="text-4xl sm:text-5xl font-bold mt-4 mb-6">{t('certs.title')}</h2>
+    <div class="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
+  </div>
+  <div data-animate>
+    <Certifications />
+  </div>
+</section>
